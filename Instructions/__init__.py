@@ -3,7 +3,8 @@ from otree.api import *
 import time
 
 doc = """
-This app includes the introduction page, consent form and instructions of the experiment itself. 
+Initialize Introduction app.
+Includes introduction page and instructions
 """
 
 class Constants(BaseConstants):
@@ -18,9 +19,9 @@ class Constants(BaseConstants):
     leaf_symbol = 'global/figures/one_leaf.png'
     star_symbol = 'global/figures/one_star.png'
     ## Variables that are not fully defined yet
-    MaxBonus = int(3)
-    NumTrials = int(37) 
-    AvgDur = "15-20"
+    MaxBonus = int(10)
+    NumTrials = int(100) # To be changed 
+    AvgDur = "10-15"
     TreesOrg = "One Tree Planted"
 
     ## Slides for introduction

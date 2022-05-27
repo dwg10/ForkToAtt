@@ -10,29 +10,37 @@ import csv
 from sqlalchemy import true
 
 doc = """
-Creates Table with Visual Tracing
+Should create the buckets with balls for the first code
 """
 
 
 class Constants(BaseConstants):
     name_in_url         = 'Main-Task'
-    # Sustainability Sets
-    lS1, lS2 = [[0,1],[1,2],[0,2]], [[0,0],[1,1],[2,2]]
-    ## Quality Sets 
-    lQc,lQs, lQe= [[1,0],[2,0],[2,1]], [[0,1],[0,2],[1,2]], [[0,0],[1,1],[2,2]]
-    ## Price Sets
-    lPrices = [1,1.5,2,2.5,3,3]
-    lPoe, lPse, lPeq = [],[],[]
+    ## Highest Colour Sets
+    lH1, lH2 = [[5,10], [5,20], [5, 20]], [[5,5], [10,10], [20,20]]
 
-    for x  in lPrices:
-        for y in lPrices:
-            lPair = [x,y]
-            if x>y:
-                lPoe.append(lPair)
-            elif x<y: 
-                lPse.append(lPair)
-            else:
-                lPeq.append(lPair)
+    ## Middle Colour Sets
+    ## Lowest Colour Sets
+    
+    ## Add something here with the combinations of balls
+    
+    # # Sustainability Sets
+    # lS1, lS2 = [[0,1],[1,2],[0,2]], [[0,0],[1,1],[2,2]]
+    # ## Quality Sets 
+    # lQc,lQs, lQe= [[1,0],[2,0],[2,1]], [[0,1],[0,2],[1,2]], [[0,0],[1,1],[2,2]]
+    # ## Price Sets
+    # lPrices = [1,1.5,2,2.5,3,3]
+    # lPoe, lPse, lPeq = [],[],[]
+
+    # for x  in lPrices:
+    #     for y in lPrices:
+    #         lPair = [x,y]
+    #         if x>y:
+    #             lPoe.append(lPair)
+    #         elif x<y: 
+    #             lPse.append(lPair)
+    #         else:
+    #             lPeq.append(lPair)
 
     ## Number of trials
     num_reps            = 1 # number of repetitions per permutation
