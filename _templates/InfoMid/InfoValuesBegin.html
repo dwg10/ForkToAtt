@@ -1,0 +1,20 @@
+<div class="content-info"  id="content-infoBegin">
+    <b>{{ vColours.title }}: </b>
+    <ul>
+        <li>  The balls in the basket could contain one of the following three colours: {{ vColours.colour1 }}, 
+            {{ vColours.colour2 }} or {{ vColours.colour3 }}. </li>
+        <li> 
+            Each colour indicates a different value.
+            <ul>
+                <li> <img class="img-info" src="{% static vColours.sColour1 %}" />: A {{ vColours.colour1 }} ball has a value of {{ lValuesFirst.sValueHigh }}. </li>
+                <li> <img class="img-info" src="{% static vColours.sColour2 %}" />: A {{ vColours.colour2 }} ball has a value of {{ lValuesFirst.sValueMid }}. </li>
+                <li> <img class="img-info" src="{% static vColours.sColour3 %}" />: A {{ vColours.colour3 }} ball has a value of {{ lValuesFirst.sValueLow }}. </li>
+            </ul>
+            This means that a {{ vColours.colour1 }} ball is worth more than a {{ vColours.colour2 }} ball and a {{ vColours.colour3 }} ball, 
+            whilst a {{ vColours.colour2 }} ball is worth more than a {{ vColours.colour3 }} ball. 
+        </li>
+        <li>
+            The total value of a basket consists of the value of all the balls combined.
+        </li>	
+    </ul>
+</div>    

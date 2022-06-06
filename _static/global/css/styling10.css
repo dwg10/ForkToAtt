@@ -27,8 +27,6 @@
     --background-slide: var(--color9);
 }
 
-
-
 * {
     box-sizing: border-box;
 }
@@ -57,10 +55,18 @@
 /* CONTAINER DIVS */
 
 .double-container {
+    /* display: initial; */
+    /* height: 100%;
+    width: 100%; */
+    /* flex-direction: row; */
+    align-items: center;
+}
+
+/* .double-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-}
+} */
 
 .text-container {
     width: 70%;

@@ -13,16 +13,17 @@ class Constants(BaseConstants):
     num_rounds = 1
     ## Symbols directory
     UvA_logo = 'global/figures/UvA_logo.png'
-    OTP_logo = 'global/figures/Logo_OneTreePlanted.png'
-    revealed_task = 'global/figures/revealed_task_img.png'
-    circled_task = 'global/figures/circled_task_img.png'
-    leaf_symbol = 'global/figures/one_leaf.png'
+    # OTP_logo = 'global/figures/Logo_OneTreePlanted.png'
+    revealed_task = 'global/figures/revealed_task_balls_img.png'
+    circled_task = 'global/figures/circled_task_balls_img.png'
+    # leaf_symbol = 'global/figures/one_leaf.png'
     star_symbol = 'global/figures/one_star.png'
     ## Variables that are not fully defined yet
-    MaxBonus = int(10)
-    NumTrials = int(100) # To be changed 
-    AvgDur = "10-15"
-    TreesOrg = "One Tree Planted"
+    BonusPayment = int(10)
+    FixedPayment = int(10)
+    NumTrials = int(42) # To be changed 
+    AvgDuration = "10-12"
+    # TreesOrg = "One Tree Planted"
 
     ## Slides for introduction
     SlidePath = 'Instructions/slide'
@@ -42,27 +43,23 @@ class Constants(BaseConstants):
             path=SlidePath+'0.html',
             ),
         dict(
-            Title = 'Your Decisions',
+            Title = 'The Setup (1)',
             path=SlidePath+'1.html'
             ),
         dict(
-            Title = 'The product characteristics',
+            Title = 'The Setup (2)',
             path=SlidePath+'2.html'
             ),
         dict(
-            Title = 'Value of Labels',
-            path='InfoMid/InfoValues.html'
-            ),
-        dict(
-            Title = 'Purchasing Platform',
+            Title = 'The Setup (3)',
             path=SlidePath+'3.html'
             ),
         dict(
-            Title = 'The product characteristics',
+            Title = 'The Setup (4)',
             path=SlidePath+'4.html'
             ),
         dict(
-            Title = 'Is it all clear? Please answer these questions correctly to proceed:',
+            Title = 'All clear? Please answer these questions correctly to proceed:',
             path=SlidePath+'5.html'
             ),
     ]
@@ -119,8 +116,8 @@ class Calibration(Page):
 class Instructions(Page):
     form_model = 'player'
     form_fields = [ 
-        'sTreesLocation',
-        'bClickedLocation',
+        # 'sTreesLocation',
+        # 'bClickedLocation',
         'sSlideSequence',
         'sSlideTime',
         ]
@@ -130,12 +127,13 @@ class Instructions(Page):
     def vars_for_template(player):
         return dict(
             Slides = Constants.Slides,
-            lAttr = player.participant.lAttr,
+            # lAttr = player.participant.lAttr,
     )
+
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         part = player.participant
-        part.sTreesLocation = player.sTreesLocation
+        # part.sTreesLocation = player.sTreesLocation
 
     @staticmethod
     def js_vars(player: Player):
@@ -157,5 +155,6 @@ class Instructions(Page):
 
 
 page_sequence = [Introduction, Calibration, Instructions]
+# page_sequence = [Introduction, Calibration]
 
 

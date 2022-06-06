@@ -1,0 +1,23 @@
+<div class="content-info"  id="content-infoMid">
+    <b>{{ vColours.title }}: </b>
+    <ul>
+        <li> Please note that the value of the {{ vColours.colour2 }} ball will change in the remainder of the experiment. </li>
+        <li> 
+            Instead of the old value of 10, the {{ vColours.colour2 }} ball will have a value of {{ lValuesSecond.sValueMid }}. </li> 
+            <!-- In other words, the value of the {{ vColours.colour2 }} ball(s) is {{ lValuesSecond.sValueRelative }} balls
+        </li> -->
+        <li> 
+            The following value scheme now applies:
+            <ul>
+                <li> <img class="img-info" src="{% static vColours.sColour1 %}" />: A {{ vColours.colour1 }} ball has a value of {{ lValuesSecond.sValueHigh }}. </li>
+                <li> <img class="img-info" src="{% static vColours.sColour2 %}" />: A {{ vColours.colour2 }} ball has a value of {{ lValuesSecond.sValueMid }}. </li>
+                <li> <img class="img-info" src="{% static vColours.sColour3 %}" />: A {{ vColours.colour3 }} ball has a value of {{ lValuesSecond.sValueLow }}. </li>
+            </ul>
+            <!-- This means that a {{ vColours.colour2 }} ball is worth more than a {{ vColours.colour2 }} ball and a {{ vColours.colour3 }} ball, 
+            whilst a {{ vColours.colour2 }} ball is worth more than a {{ vColours.colour3 }} ball.  -->
+        </li>
+        <li>
+            The total value of a basket still consists of the value of all the balls combined.
+        </li>	
+    </ul>
+</div>    

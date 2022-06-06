@@ -5,12 +5,12 @@ from numpy import random
 c = Currency
 
 doc = """
-TREATMENTS HAVE BEEN MODIFIED:
-1 - LINEAR
-2 - SUSTAINABILITY CONVEX
-3 - QUALITY CONVEX
+Treatments are:
+1 - Equal Start (20-10-5) - Higher Mid Value (20-20-5)
+2 - Equal Start (20-10-5) - Lower Mid Value (20-5-5)
+3 - Unequal Start (10-10-10) - Higher Mid Value (20-10-10)
+4 - Unequal Start (10-10-10) - Lower Mid Value (10-10-5)
 """
-
 
 class Constants(BaseConstants):
     name_in_url = 'Infographics'
@@ -106,7 +106,7 @@ def creating_session(subsession):
             player.iTreatment = p.iTreatment = iTreatment 
         else:
             # player.iTreatment =  p.iTreatment = iTreatment = random.randint(1,Constants.iRandomTreatment) 
-            # For the follow up we omitted the non information treatment
+            # Between 1 and 4 (both included)
             player.iTreatment =  p.iTreatment = iTreatment = random.randint(1,Constants.iRandomTreatment-1)
         print('Treatment for participant: {}'.format(p.iTreatment))
         # Add path to graph to treatment dictionary

@@ -4,9 +4,12 @@ SESSION_CONFIGS = [
     dict(
     name='session_config',
     display_name='Ecolabels Config',
-    num_demo_participants=10,
-    app_sequence=['Instructions', 'EcoTask', 'Infographics2','EcoTask2','EndBelief','Questionnaire' ,'EndPage'],
+    num_demo_participants=2,
+    # app_sequence=['Instructions', 'EcoTask', 'Infographics2','EcoTask2','EndBelief','Questionnaire' ,'EndPage'],
+    # app_sequence=['Instructions', 'Infographics1', 'EcoTask', 'Infographics3', 'EcoTask2'],
+    app_sequence=['Instructions', 'Infographics1', 'Infographics3', 'EcoTask2'], #, 'EndBelief','Questionnaire','EndPage'],
     iTreatment = 4,
+    iColour = 1,
     iTimeOut=0,
     bRequireFS=True,
     bCheckFocus=True,
@@ -25,6 +28,17 @@ SESSION_CONFIGS = [
         name='Questionnaire',
         num_demo_participants= 1,
         app_sequence=['Questionnaire']
+    ),
+    dict(
+        name='Part1',
+        num_demo_participants= 1,
+        app_sequence=['Instructions', 'EcoTask'],
+        bRequireFS=True,
+        bCheckFocus=True,
+        # dPixelRatio=True,
+        iTimeOut=0
+        # 'StartLeft'         : player.bStartLeft,
+        # dPixelRatio'       : p.dPixelRatio,
     ),
     dict(
         name='Intro',
@@ -49,14 +63,15 @@ SESSION_CONFIGS = [
 
 
 PARTICIPANT_FIELDS = [
-    'treatment', 
+    'treatment',
+    'colour',
     'PresOrder',
     'mTreat',
     'vRownames',
     'SelectedTrial',
-    'Price',
-    'Q',
-    'S',
+    'Mid',
+    'High',
+    'Low',
     'ProlificID',
     'Bonus',
     'TreeAmount',
@@ -67,14 +82,17 @@ PARTICIPANT_FIELDS = [
     'iFullscreenChanges',
     'iCorrectBeliefs',
     'iTreatment',
+    'iColour',
     'startTime',
     'sTreesLocation',
     'dPixelRatio',
     'lAttr',
+    'vColours',
+    'lValuesFirst',
+    'lValuesSecond',
     'sRandom',
     'qRandom',
     ]
-
 
 SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""

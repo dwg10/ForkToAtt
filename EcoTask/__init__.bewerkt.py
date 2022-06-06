@@ -15,38 +15,95 @@ Should create the buckets with balls for the first code
 """
 
 class Constants(BaseConstants):
-    name_in_url         = 'Main-Task2'
+    name_in_url         = 'Main-Task'
     ## Colour Sets (Quantities) To be changed according to mail
-    lDiffACH = [[5,6], [5,10], [6,10], [14, 20], [10,12], [3,5], [20,12]]
-    lDiffACM = [[5,2], [13,10], [20,3], [10, 3], [6,8], [5,8], [20,15]]
-    lDiffACL = [[4,2], [7,2], [2,10], [5, 9], [20,8], [11,7], [15,5]]
+    lDiffH = [[2,3], [10,10], [5, 5], [7,10], [10,10], [5,3], [12,20]]
+    lDiffM = [[2,2], [10,10], [6, 5], [8,8], [7,8], [6,8], [20,15]]
+    lDiffL = [[2,2], [12,10], [5, 5], [9,7], [9,8], [7,7], [15,5]]
 
-    # NL, L, NL, L, NL, L, L
+    lDiff1H, lDiff1M, lDiff1L, lDiff2H, lDiff2M, lDiff2L = ([] for i in range(6))
+    for list in lDiffH:
+        lDiff1H.append([x+1 for x in list])
+        lDiff2H.append([x*2 for x in list])
 
-    lDiff1ACH, lDiff1ACM, lDiff1ACL, lDiff2ACH, lDiff2ACM, lDiff2ACL = ([] for i in range(6))
-    for list in lDiffACH:
-        lDiff1ACH.append([x*2 for x in list])
-        lDiff2ACH.append([x*3 for x in list])
+    for list in lDiffM:
+        lDiff1M.append([x+1 for x in list])
+        lDiff2M.append([x*2 for x in list])
 
-    for list in lDiffACM:
-        lDiff1ACM.append([x*2 for x in list])
-        lDiff2ACM.append([x*3 for x in list])
+    for list in lDiffL:
+        lDiff1L.append([x+1 for x in list])
+        lDiff2L.append([x*2 for x in list])
 
-    for list in lDiffACL:
-        lDiff1ACL.append([x*2 for x in list])
-        lDiff2ACL.append([x*3 for x in list])
-
-    lDiffAllACH = lDiffACH + lDiff1ACH + lDiff2ACH
-    lDiffAllACM = lDiffACM + lDiff1ACM + lDiff2ACM
-    lDiffAllACL = lDiffACL + lDiff1ACL + lDiff2ACL
+    lDiffAllH = lDiffH + lDiff1H + lDiff2H
+    lDiffAllM = lDiffM + lDiff1M + lDiff2M
+    lDiffAllL = lDiffL + lDiff1L + lDiff2L
       
     ## Number of trials
-    # num_reps            = 1 # number of repetitions per permutation
-    # num_repsEq          = 2 # Number of cases with equal sustainability
-    num_prounds         = 0 # Number of Practice Rounds  
+    num_reps            = 1 # number of repetitions per permutation
+    num_repsEq          = 2 # Number of cases with equal sustainability
+    num_prounds         = 3 # Number of Practice Rounds  
     num_rounds          = 21 + num_prounds # Number of rounds
     players_per_group   = None
     sImagePath          = 'global/figures/'
+
+    sPathB              = sImagePath+'Blue.png'
+    sPathLB             = sImagePath+'LightBlue.png'
+    sPathR              = sImagePath+'Red.png'
+    sPathY              = sImagePath+'Yellow.png'
+    iRandomTreatment    = 4 # 1 to 4
+    iRandomColour       = 4 # 1 to 4
+    
+    # Nog veranderen
+    lEqual = dict(        
+        sValueHigh = '10',
+        sValueMid = '10', 
+        sValueLow = '10',
+    )
+    lUnequal = dict(        
+        sValueHigh = '20',
+        sValueMid = '10', 
+        sValueLow = '5',
+    )
+    lAttrRYB = dict(        
+        attr = 'Colour Values',
+        title = 'Colour Values',
+        colour1 = 'Blue',
+        colour2 = 'Red',
+        colour3 = 'Yellow',
+        sColour1 = sPathB,
+        sColour2 = sPathR,
+        sColour3 = sPathY, 
+    )
+    lAttrHR = dict(
+        attr = 'Colour Values',
+        title = 'Colour Values',
+        colour1 = 'Red',
+        colour2 = 'Light Blue',
+        colour3 = 'Blue',
+        sColour1 = sPathR,
+        sColour2 = sPathLB,
+        sColour3 = sPathB,
+    )
+    lAttrMR = dict(
+        attr = 'Colour Values',
+        title = 'Colour Values',
+        colour1 = 'Blue',
+        colour2 = 'Red',
+        colour3 = 'Light Blue',
+        sColour1 = sPathB,
+        sColour2 = sPathR,
+        sColour3 = sPathLB,
+    )
+    lAttrLR = dict(
+        attr = 'Colour Values',
+        title = 'Colour Values',
+        colour1 = 'Light Blue',
+        colour2 = 'Blue',
+        colour3 = 'Red',
+        sColour1 = sPathLB,
+        sColour2 = sPathB,
+        sColour3 = sPathR,
+    )
 
 class Subsession(BaseSubsession):
     pass
@@ -80,6 +137,14 @@ class Player(BasePlayer):
     High1                  = models.StringField(blank=True)
     Low0                  = models.StringField(blank=True)
     Low1                  = models.StringField(blank=True)
+    ## Van info1 erbij
+    sAttrOrder          = models.StringField()
+    dRTbelief           = models.FloatField(blank=True)
+    dRTinfographics     = models.FloatField(blank=True)
+    iTreatment          = models.IntegerField()
+    iColour             = models.IntegerField()
+    sSlideSequence      = models.StringField(blank=True)
+    sSlideTime          = models.StringField(blank=True)
 
 # FUNCTIONS
 
@@ -87,13 +152,45 @@ def creating_session(subsession):
     ## SETUP FOR PARTICIPANT
     if subsession.round_number == 1:
         for player in subsession.get_players():
-            p, session, = player.participant, subsession.session
-            iTreatment = p.iTreatment
-            lTreat, lRownames   = createTreatment(iTreatment)
+            p, session = player.participant, subsession.session
+            lTreat, lRownames   = createTreatment()
             p.vRownames         = lRownames
             p.mTreat            = lTreat             
             p.SelectedTrial     = random.choice(range(Constants.num_prounds+1,Constants.num_rounds))
             print('Trial selected for participant {}: {}'.format(p.code,p.SelectedTrial))
+            
+            iTreatment = session.config['iTreatment'] # Snap nog even niet of het nou 4 of 5 treatments kunnen zijn
+            iColour = session.config['iColour']
+            if (iTreatment!=Constants.iRandomTreatment):
+                player.iTreatment = p.iTreatment = iTreatment 
+            else:
+                player.iTreatment =  p.iTreatment = iTreatment = random.randint(1,Constants.iRandomTreatment)
+            if (iTreatment!=Constants.iRandomColour):
+                player.iColour = p.iColour = iColour 
+            else:
+                player.iColour =  p.iColour = iColour = random.randint(1,Constants.iColour)
+            
+            print('Treatment for participant: {}'.format(p.iTreatment))
+            lAttrRYB = Constants.lAttrRYB.copy()
+            lAttrHR = Constants.lAttrHR.copy()
+            lAttrMR = Constants.lAttrMR.copy()
+            lAttrLR = Constants.lAttrLR.copy()
+            lEqual = Constants.lEqual.copy()
+            lUnequal = Constants.lUnequal.copy()
+
+            if (player.iTreatment <= 2):
+                p.lValuesFirst = lEqual
+            else:
+                p.lValuesFirst = lUnequal
+            
+            if (player.iColour==1):
+                p.vColours = lAttrRYB
+            elif (player.iColour==2):
+                p.vColours = lAttrHR
+            elif (player.iColour==3):
+                p.vColours = lAttrMR
+            else:
+                p.vColours = lAttrLR 
     ## SETUP FOR PLAYER ROUNDS
     for player in subsession.get_players():
         ## Load participant and save participant variables in player
@@ -134,14 +231,17 @@ def creating_session(subsession):
 # def join2String(list, delimiter= ','):
 #         return delimiter.join(map(str,list))
 
-def createTreatment(trNumber):
+def createTreatment():
+    n = Constants.num_reps
+    n_eq = Constants.num_repsEq
+
     ## Sets
     iSize = int((Constants.num_rounds-Constants.num_prounds))
     
     ## AllDiff
-    lDiffAllACH = Constants.lDiffAllACH
-    lDiffAllACM = Constants.lDiffAllACM
-    lDiffAllACL = Constants.lDiffAllACL
+    lDiffAllH = Constants.lDiffAllH
+    lDiffAllM = Constants.lDiffAllM
+    lDiffAllL = Constants.lDiffAllL
 
     lTreatments = ["" for x in range(iSize)] # Initialiseren variabelen
     lAttr = [] # DIT ZELF TOEGEVOEGD
@@ -149,27 +249,24 @@ def createTreatment(trNumber):
     # Establish order of qualities
     order = sample(['High','Low'],2)
     counter = 0
-    randomOrder = sample(range(len(lDiffAllACH)), len(lDiffAllACH))
+    randomOrder = sample(range(len(lDiffAllH)), len(lDiffAllH))
     for i in randomOrder:
-        # Invert order (Left - Right) if in this trial outcomes are flipped
-        if ((random.choice([True,False]) == True) & (trNumber == 2 | trNumber == 3)):
-            high        = copy.copy((lDiffAllACH[i]))[::-1]
-            low         = copy.copy((lDiffAllACL[i]))[::-1]
-            mid         = copy.copy((lDiffAllACM[i]))[::-1]
-        elif ((random.choice([True,False]) == True) & (trNumber == 1 | trNumber == 4)):
-            high        = copy.copy((lDiffAllACL[i]))[::-1]
-            low         = copy.copy((lDiffAllACH[i]))[::-1]
-            mid         = copy.copy((lDiffAllACM[i]))[::-1]
-        elif ((random.choice([True,False]) == False) & (trNumber == 2 | trNumber == 3)):
-            high        = copy.copy((lDiffAllACH[i]))
-            low         = copy.copy((lDiffAllACL[i]))
-            mid         = copy.copy((lDiffAllACM[i]))
+        # Invert order if in this trial outcomes are flipped
+        # Even uitgezet
+        if random.choice([True,False]):
+            high        = copy.copy((lDiffAllH[i]))[::-1]
+            low         = copy.copy((lDiffAllL[i]))[::-1]
+            mid         = copy.copy((lDiffAllM[i]))[::-1]
         else:
-            high        = copy.copy((lDiffAllACL[i]))
-            low         = copy.copy((lDiffAllACH[i]))
-            mid         = copy.copy((lDiffAllACM[i]))
+            high        = copy.copy((lDiffAllH[i]))
+            low         = copy.copy((lDiffAllL[i]))
+            mid         = copy.copy((lDiffAllM[i]))
 
-        # Invert order (Up - Down) randomly
+        # high        = copy.copy((lDiffAllH[i]))
+        # low         = copy.copy((lDiffAllL[i]))
+        # mid         = copy.copy((lDiffAllM[i]))
+
+        # Add attributes depending order
         if order[0] == 'High':
             lAttr.append(high)
             lAttr.append(mid) # Toegevoegd
@@ -183,6 +280,7 @@ def createTreatment(trNumber):
         counter +=1
     
     lAttList = [order[0], 'Mid', order[1]]
+    # random.shuffle(lTreatments)
     # Nu bepaald door order
     return lTreatments, lAttList
 
@@ -209,9 +307,9 @@ class Task(Page):
         print('Part: {}, trial: {}'.format(participant.label, player.round_number))
         vRownames = participant.vRownames   ## Variable order
         vColours = participant.vColours
-        sColour1 = vColours['sColour1']
-        sColour2 = vColours['sColour2']
-        sColour3 = vColours['sColour3']
+        colour1 = vColours.colour1
+        colour2 = vColours.colour2
+        colour3 = vColours.colour3
 
         if vRownames[0]=='Low': # Quality
             A10 = player.Low0
@@ -228,10 +326,9 @@ class Task(Page):
             Attr0 = vRownames[0],
             Attr1 = vRownames[1],
             Attr2 = vRownames[2],
-            vColours = player.participant.vColours,
-            sColour1 = sColour1,
-            sColour2 = sColour2,
-            sColour3 = sColour3,
+            ColourHigh = colour1,
+            ColourMid = colour2,
+            ColourLow = colour3,
             Mid0 = player.Mid0,
             Mid1 = player.Mid1,
             A10 = A10,
@@ -263,13 +360,13 @@ class Task(Page):
         # If this is selected trial, save relevant variables
         if (participant.SelectedTrial==player.round_number):
             if (player.iDec==0):
-                participant.Mid = player.Mid0
-                participant.High = player.High0
-                participant.Low = player.Low0
+                participant.Price = player.Mid0
+                participant.Q = player.High0
+                participant.S = player.Low0
             else:
-                participant.Mid = player.Mid1
-                participant.High = player.High1
-                participant.Low = player.Low1
+                participant.Price = player.Mid1
+                participant.Q = player.High1
+                participant.S = player.Low1
        
 
 class Between(Page):
@@ -296,9 +393,14 @@ class Ready(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        # Choose text depending round
+        if (player.round_number==1):
+            sText = 'Now, you will have '+str(Constants.num_prounds)+' practice rounds. </br> These rounds will not be considered for your final payment.'
+        else:
+            sText = 'The practice rounds are over. Now, we will continue with the experiment.'
         # Return selected text
         return dict(
-            text = 'We will now continue with the experiment.'
+            text = sText
         )
 
     @staticmethod
@@ -307,7 +409,39 @@ class Ready(Page):
         return (
             (player.round_number==1) or (player.round_number==Constants.num_prounds+1)
         )
-        
 
-page_sequence = [Ready, Between, Task]
+class Infographics(Page):
+    form_model = 'player'
+    form_fields = [ 
+        # 'sSlideSequence',
+        # 'sSlideTime',
+        # 'dRTinfographics',
+        ]
+
+    @staticmethod
+    def js_vars(player: Player):
+        lSolutions = ['3','1']
+        if player.iTreatment ==1:
+            lSolutions.extend(['15','15'])
+        elif player.iTreatment ==2:
+            lSolutions.extend(['15','2.5'])
+        elif player.iTreatment ==3:
+            lSolutions.extend(['27.5','15'])
+
+
+        return dict(
+            lSolutions = lSolutions
+        )
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            # lAttr = player.participant.lAttr,
+            lValuesFirst = player.participant.lValuesFirst,
+            vColours = player.participant.vColours
+        )
+
+class FirstCheck(Page):
+    pass
+
+page_sequence = [FirstCheck, Infographics, Ready, Between, Task]
 # page_sequence = [Task]

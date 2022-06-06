@@ -1,26 +1,25 @@
-<ul>
-    <li>
-        <b>Price:</b> This is the cost you need to pay for the product. The price is in <b>£</b>.
-    </li>
-    <p class="slide2-description">
-        Higher Price <span>&#8594;</span> lower bonus payments.
-    </p>
-    <li>
-        <b>Quality:</b> 1-3 star (<img class="symbol" src="{% static Constants.star_symbol %}" />) rating.
-        Products
-        with more stars (<img class="symbol" src="{% static Constants.star_symbol %}" />) are more likely to have
-        higher quality.
-    </li>
-    <p class="slide2-description">
-        Higher quality <span>&#8594;</span> higher bonus payments.
-    </p>
-    <li>
-        <b>Eco-Label:</b> 1-3 leaf (<img class="symbol" src="{% static Constants.leaf_symbol %}" />) rating.
-        Products
-        with more leaves (<img class="symbol" src="{% static Constants.leaf_symbol %}" />) are more likely
-        to be more sustainable.
-    </li>
-    <p class="slide2-description">
-        Higher sustainability <span>&#8594;</span> more trees planted.
-    </p>
-</ul>
+<div class="double-container">
+    <div class="text-container">
+        <p> Before the start of the experiment, information on the values of the balls will be shared.</p>
+        <ul>
+            <li> Upon the start of the experiment, information on the values of the balls will be shared.</li>
+            <li> Each colour indicates a certain value. For example: </li>
+            <ul>
+                <li> <img class="img-info" src="{% static 'global/figures/Blue.png' %}" />: A blue ball has a value of 5. </li>
+                <li> <img class="img-info" src="{% static 'global/figures/Red.png' %}" />: A red ball has a value of 2. </li>
+                <li> <img class="img-info" src="{% static 'global/figures/Yellow.png' %}" />: A yellow ball has a value of 1. </li>
+            </ul>
+            <li> This would mean that a blue ball is worth more than a red ball and a yellow ball, 
+            whilst a red ball would be worth more than a yellow ball.</li>
+            <li> The total value of all balls of one colour can be calculated by multiplying the number of balls of that colour with the relevant value of that colour. </li>
+            <li> In the example, this would mean that the red balls in the first basket have a total value of 40 x 2 = 80.</li>
+            <li> Adding these total values for all three colours within a basket will give you the total value of a basket. </li>
+            <li> In the example, this would mean that the first basket has a total value of (4 x 5) + (40 x 2) + (10 x 1) = 110.</li>
+            <li> <u>Note:</u> The value of each colour will only be shared <b>once!</b> Make sure that you know these upon starting the experiment.</li>
+            <li> In the next slide, we will explain more about the decision process.</li>
+        </ul>
+    </div>
+    <div class="img-container">
+        <img class="task-img" src="{% static Constants.revealed_task %}" />
+    </div>
+</div>

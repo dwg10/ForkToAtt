@@ -4,6 +4,7 @@ import numpy as np
 from numpy import random
 from random import SystemRandom, sample
 from random import choices
+import copy
 import pandas as pd
 import csv
 
@@ -13,43 +14,37 @@ doc = """
 Should create the buckets with balls for the first code
 """
 
-
 class Constants(BaseConstants):
     name_in_url         = 'Main-Task'
-    ## Highest Colour Sets
-    lH1, lH2 = [[5,10], [5,20], [5, 20]], [[5,5], [10,10], [20,20]]
+    ## Colour Sets (Quantities) To be changed according to mail
+    lDiffH = [[2,3], [10,10], [5, 5], [7,10], [10,10], [5,3], [12,20]]
+    lDiffM = [[2,2], [10,10], [6, 5], [8,8], [7,8], [6,8], [20,15]]
+    lDiffL = [[2,2], [12,10], [5, 5], [9,7], [9,8], [7,7], [15,5]]
 
-    ## Middle Colour Sets
-    ## Lowest Colour Sets
-    
-    ## Add something here with the combinations of balls
-    
-    # # Sustainability Sets
-    # lS1, lS2 = [[0,1],[1,2],[0,2]], [[0,0],[1,1],[2,2]]
-    # ## Quality Sets 
-    # lQc,lQs, lQe= [[1,0],[2,0],[2,1]], [[0,1],[0,2],[1,2]], [[0,0],[1,1],[2,2]]
-    # ## Price Sets
-    # lPrices = [1,1.5,2,2.5,3,3]
-    # lPoe, lPse, lPeq = [],[],[]
+    lDiff1H, lDiff1M, lDiff1L, lDiff2H, lDiff2M, lDiff2L = ([] for i in range(6))
+    for list in lDiffH:
+        lDiff1H.append([x+1 for x in list])
+        lDiff2H.append([x*2 for x in list])
 
-    # for x  in lPrices:
-    #     for y in lPrices:
-    #         lPair = [x,y]
-    #         if x>y:
-    #             lPoe.append(lPair)
-    #         elif x<y: 
-    #             lPse.append(lPair)
-    #         else:
-    #             lPeq.append(lPair)
+    for list in lDiffM:
+        lDiff1M.append([x+1 for x in list])
+        lDiff2M.append([x*2 for x in list])
 
+    for list in lDiffL:
+        lDiff1L.append([x+1 for x in list])
+        lDiff2L.append([x*2 for x in list])
+
+    lDiffAllH = lDiffH + lDiff1H + lDiff2H
+    lDiffAllM = lDiffM + lDiff1M + lDiff2M
+    lDiffAllL = lDiffL + lDiff1L + lDiff2L
+      
     ## Number of trials
     num_reps            = 1 # number of repetitions per permutation
     num_repsEq          = 2 # Number of cases with equal sustainability
     num_prounds         = 3 # Number of Practice Rounds  
-    num_rounds          = (num_reps*len(lS1)*5+num_repsEq)+num_prounds # Number of rounds
+    num_rounds          = 21 + num_prounds # Number of rounds
     players_per_group   = None
     sImagePath          = 'global/figures/'
-
 
 class Subsession(BaseSubsession):
     pass
@@ -77,14 +72,12 @@ class Player(BasePlayer):
     dFocusLostT         = models.FloatField(blank=True)
     iFullscreenChange   = models.IntegerField(blank=True)
     ## Attributes
-    P0                  = models.StringField(blank=True)
-    P1                  = models.StringField(blank=True)
-    Q0                  = models.StringField(blank=True)
-    Q1                  = models.StringField(blank=True)
-    S0                  = models.StringField(blank=True)
-    S1                  = models.StringField(blank=True)
-
-
+    Mid0                  = models.StringField(blank=True)
+    Mid1                  = models.StringField(blank=True)
+    High0                  = models.StringField(blank=True)
+    High1                  = models.StringField(blank=True)
+    Low0                  = models.StringField(blank=True)
+    Low1                  = models.StringField(blank=True)
 
 # FUNCTIONS
 
@@ -95,14 +88,14 @@ def creating_session(subsession):
             p, session = player.participant, subsession.session
             lTreat, lRownames   = createTreatment()
             p.vRownames         = lRownames
-            p.mTreat            = lTreat               
+            p.mTreat            = lTreat             
             p.SelectedTrial     = random.choice(range(Constants.num_prounds+1,Constants.num_rounds))
             print('Trial selected for participant {}: {}'.format(p.code,p.SelectedTrial))
     ## SETUP FOR PLAYER ROUNDS
     for player in subsession.get_players():
         ## Load participant and save participant variables in player
         p = player.participant
-        player.sAttrOrder = p.sAttrOrder = p.vRownames[1] # Order of presentation of attributes. 1st attribute always price, then Q or S
+        player.sAttrOrder = p.sAttrOrder = p.vRownames[0] # Used to be 1 # Order of presentation of attributes. 1st attribute always price, then Q or S
         ## Round Variables
         total_rounds = Constants.num_rounds-Constants.num_prounds
         round = player.round_number-Constants.num_prounds
@@ -111,123 +104,85 @@ def creating_session(subsession):
             player.iPracticeRound   = 1
             player.iBlockTrial      = random.randint(total_rounds)
             x = int( player.iBlockTrial-1)
-            lAttr = p.mTreat[x].split(',')
+            lAttr = p.mTreat[x]
         elif (round<=total_rounds): ## These are the trials of the block
             player.iBlockTrial = int(round)
             x = int(round-1)
-            lAttr = p.mTreat[x].split(',')
+            lAttr = p.mTreat[x]
 
         ## Randomize if mouse starts on left or right
         player.bStartLeft = random.choice([True,False])
         # Check order of Attributes and save them as player variables
-        player.P0   = lAttr[0]
-        player.P1   = lAttr[1]
-        if p.vRownames[1]=='Quality':
-            player.Q0 = lAttr[2]
-            player.Q1 = lAttr[3]
-            player.S0 = lAttr[4]
-            player.S1 = lAttr[5]
+        # DEZE QUA NAAM (Mid0 ENZO) VERANDEREN
+        player.Mid0   = str(lAttr[1][0]) # Mid, Q is High, S is Low
+        player.Mid1   = str(lAttr[1][1])
+        if p.vRownames[0]=='Low':
+            player.High0 = str(lAttr[2][0])
+            player.High1 = str(lAttr[2][1]) #3
+            player.Low0 = str(lAttr[0][0]) #4
+            player.Low1 = str(lAttr[0][1]) #5
         else:
-            player.Q0 = lAttr[4]
-            player.Q1 = lAttr[5]
-            player.S0 = lAttr[2]
-            player.S1 = lAttr[3]
+            player.High0 = str(lAttr[0][0]) #4
+            player.High1 = str(lAttr[0][1]) #5
+            player.Low0 = str(lAttr[2][0])
+            player.Low1 = str(lAttr[2][1]) #3
 
-# Functions
-def join2String(list, delimiter= ','):
-        return delimiter.join(map(str,list))
+# # Functions
+# def join2String(list, delimiter= ','):
+#         return delimiter.join(map(str,list))
 
 def createTreatment():
     n = Constants.num_reps
     n_eq = Constants.num_repsEq
 
-    #* Sets
+    ## Sets
     iSize = int((Constants.num_rounds-Constants.num_prounds))
-    ## Sustainability
-    lS1 = Constants.lS1
-    lS2 = Constants.lS2
-    ## Quality
-    lQc = Constants.lQc
-    lQs = Constants.lQs
-    lQe = Constants.lQe
+    
+    ## AllDiff
+    lDiffAllH = Constants.lDiffAllH
+    lDiffAllM = Constants.lDiffAllM
+    lDiffAllL = Constants.lDiffAllL
 
-    ## Prices
-    lPoe = Constants.lPoe
-    lPse = Constants.lPse
-    lPeq = Constants.lPeq
-
-
-    lTreatments = ["" for x in range(iSize)]
-    lPrices     = []
-    lQual       = []
-
-    ## Competing Quality and Alternative more expensive
-    lPrices.extend(sample(lPoe,n))
-    lQual.extend(sample(lQc,n))
-    ## Competing Quality and Eco more expensive
-    lPrices.extend(sample(lPse,n))
-    lQual.extend(sample(lQc,n))
-    ## Supporting Quality and Eco more expensive
-    lPrices.extend(sample(lPse,n))
-    lQual.extend(sample(lQs,n))
-    ## Equal Quality and Eco more expensive
-    lPrices.extend(sample(lPse,n))
-    lQual.extend(sample(lQe,n))
-    ## Competing Quality and Equal price
-    lPrices.extend(sample(lPeq,n))
-    lQual.extend(sample(lQc,n))  
+    lTreatments = ["" for x in range(iSize)] # Initialiseren variabelen
+    lAttr = [] # DIT ZELF TOEGEVOEGD
 
     # Establish order of qualities
-    order = sample(['Quality','Sustainability'],2)
+    order = sample(['High','Low'],2)
     counter = 0
-    for i in range(len(lPrices)):
-        for sus in range(len(lS1)): 
-
-            # Invert order if in this trial outcomes are flipped
-            if random.choice([True,False]):
-                q       = lQual[i].copy()[::-1]
-                s       = lS1[sus].copy()[::-1]
-                lAttr   = lPrices[i].copy()[::-1]
-            else:
-                q       = lQual[i].copy()
-                s       = lS1[sus].copy()  
-                lAttr   = lPrices[i].copy()
-            # Add attributes depending order
-            if order[0]=='Quality':
-                lAttr.extend(q)
-                lAttr.extend(s)
-            else: 
-                lAttr.extend(s)
-                lAttr.extend(q)
-            lTreatments[counter]=  join2String(lAttr)
-            counter +=1
-
-    # Add the observations with equal Sustainability 
-    ## Select which trial do we use:
-    lCombs = random.randint(0,len(lPrices),size=n_eq)
-
-    for sus in range(n_eq):       
-        # Randomize order
+    randomOrder = sample(range(len(lDiffAllH)), len(lDiffAllH))
+    for i in randomOrder:
+        # Invert order if in this trial outcomes are flipped
+        # Even uitgezet
         if random.choice([True,False]):
-            q       = lQual[lCombs[sus]].copy()[::-1]
-            s       = lS2[sus].copy()[::-1]
-            lAttr   = lPrices[lCombs[sus]].copy()[::-1]
+            high        = copy.copy((lDiffAllH[i]))[::-1]
+            low         = copy.copy((lDiffAllL[i]))[::-1]
+            mid         = copy.copy((lDiffAllM[i]))[::-1]
         else:
-            q       = lQual[lCombs[sus]].copy()
-            s       = lS2[sus].copy()
-            lAttr   = lPrices[lCombs[sus]].copy()
+            high        = copy.copy((lDiffAllH[i]))
+            low         = copy.copy((lDiffAllL[i]))
+            mid         = copy.copy((lDiffAllM[i]))
 
-        if order[0]=='Quality':
-                lAttr.extend(q)
-                lAttr.extend(s)
+        # high        = copy.copy((lDiffAllH[i]))
+        # low         = copy.copy((lDiffAllL[i]))
+        # mid         = copy.copy((lDiffAllM[i]))
+
+        # Add attributes depending order
+        if order[0] == 'High':
+            lAttr.append(high)
+            lAttr.append(mid) # Toegevoegd
+            lAttr.append(low)
         else: 
-                lAttr.extend(s)
-                lAttr.extend(q)
-        lTreatments[counter]=  join2String(lAttr)
+            lAttr.append(low)
+            lAttr.append(mid) # Toegevoegd
+            lAttr.append(high)
+        lTreatments[counter] = lAttr
+        lAttr = []
         counter +=1
-    lAttList = ['Price', order[0], order[1]]
-    random.shuffle(lTreatments)
-    return lTreatments,lAttList
+    
+    lAttList = [order[0], 'Mid', order[1]]
+    # random.shuffle(lTreatments)
+    # Nu bepaald door order
+    return lTreatments, lAttList
 
 # PAGES
 class Task(Page):
@@ -246,30 +201,40 @@ class Task(Page):
         'dTime2First',
     ]
 
-
     @staticmethod
     def vars_for_template(player):
         participant = player.participant
         print('Part: {}, trial: {}'.format(participant.label, player.round_number))
         vRownames = participant.vRownames   ## Variable order
-        Q0,Q1 = str(int(player.Q0)+1),str(int(player.Q1)+1)
-        S0,S1 = str(int(player.S0)+1),str(int(player.S1)+1)
-        if vRownames[1]=='Quality':
-            A10 = Constants.sImagePath+'star_'+Q0+'.png'
-            A11 = Constants.sImagePath+'star_'+Q1+'.png'
-            A20 = Constants.sImagePath+'leaf_'+S0+'.png'
-            A21 = Constants.sImagePath+'leaf_'+S1+'.png'
-        else:
-            A10 = Constants.sImagePath+'leaf_'+S0+'.png'
-            A11 = Constants.sImagePath+'leaf_'+S1+'.png'
-            A20 = Constants.sImagePath+'star_'+Q0+'.png'
-            A21 = Constants.sImagePath+'star_'+Q1+'.png'
+        vColours = participant.vColours
+        # colour1 = vColours['colour1']
+        # colour2 = vColours['colour2']
+        # colour3 = vColours['colour3']
+        sColour1 = vColours['sColour1']
+        sColour2 = vColours['sColour2']
+        sColour3 = vColours['sColour3']
 
+        if vRownames[0]=='Low': # Quality
+            A10 = player.Low0
+            A11 = player.Low1
+            A20 = player.High0
+            A21 = player.High1
+        else:
+            A10 = player.High0
+            A11 = player.High1
+            A20 = player.Low0
+            A21 = player.Low1
+        
         return dict(
+            Attr0 = vRownames[0],
             Attr1 = vRownames[1],
             Attr2 = vRownames[2],
-            P0 = player.P0,
-            P1 = player.P1,
+            vColours = player.participant.vColours,
+            sColour1 = sColour1,
+            sColour2 = sColour2,
+            sColour3 = sColour3,
+            Mid0 = player.Mid0,
+            Mid1 = player.Mid1,
             A10 = A10,
             A11 = A11,
             A20 = A20,
@@ -287,6 +252,7 @@ class Task(Page):
             'dPixelRatio'       : p.dPixelRatio,
         }
 
+    # DEZE NOG AANPASSEN
     @staticmethod
     def before_next_page(player, timeout_happened):
         participant = player.participant
@@ -298,17 +264,15 @@ class Task(Page):
         # If this is selected trial, save relevant variables
         if (participant.SelectedTrial==player.round_number):
             if (player.iDec==0):
-                participant.Price = player.P0
-                participant.Q = player.Q0
-                participant.S = player.S0
+                participant.Mid = player.Mid0
+                participant.High = player.High0
+                participant.Low = player.Low0
             else:
-                participant.Price = player.P1
-                participant.Q = player.Q1
-                participant.S = player.S1
+                participant.Mid = player.Mid1
+                participant.High = player.High1
+                participant.Low = player.Low1
        
 
-
-        
 class Between(Page):
     template_name = 'ecotask/Between.html'
     form_model = 'player'
@@ -335,7 +299,7 @@ class Ready(Page):
     def vars_for_template(player: Player):
         # Choose text depending round
         if (player.round_number==1):
-            sText = 'Now, you will have '+str(Constants.num_prounds)+' practice rounds. </br> These rounds will not count for your final payment.'
+            sText = 'Now, you will have '+str(Constants.num_prounds)+' practice rounds. </br> These rounds will not be considered for your final payment.'
         else:
             sText = 'The practice rounds are over. Now, we will continue with the experiment.'
         # Return selected text
@@ -352,3 +316,4 @@ class Ready(Page):
         
 
 page_sequence = [Ready, Between, Task]
+# page_sequence = [Task]

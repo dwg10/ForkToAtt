@@ -36,26 +36,23 @@ function validAge(str) {
     return (num>=18 && num<= 122);
 }
 const countries = ["My country is not listed", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central Arfrican Republic", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauro", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts & Nevis", "St Lucia", "St Vincent", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks & Caicos", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
-// const likertScale = [ 'Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
-// const likertValues = [1,2,3,4,5];
-const BISScale = ['Rarely/Never', 'Occasionally', 'Often', 'Almost Always/Always'];
-const BISValues = [1,2,3,4];
+const likertScale = [ 'Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
+const likertValues = [1,2,3,4,5];
 const warningAutocomplete = 'Please select one item from the list';
 const warningEmpty = 'Please do not leave this question unanswered';
-const warningAge = 'Please provide a valid answer (18 or above)';
-const BISLimits = ['Rarely/Never', 'Almost Always/Always'];
-// const likertLimits = ['Strongly Disagree','Strongly Agree'];
-// const figValues = [1,2,3];
-// const figLabels1 = [
-//     js_vars.Ql,
-//     js_vars.Qcv,
-//     js_vars.Qcx,
-// ];
-// const figLabels2 = [
-//     js_vars.Sl,
-//     js_vars.Scv,
-//     js_vars.Scx,
-// ];
+const warningAge = 'Please provide a valid answer (number from 18 to 122)';
+const likertLimits = ['Strongly Disagree','Strongly Agree'];
+const figValues = [1,2,3];
+const figLabels1 = [
+    js_vars.Ql,
+    js_vars.Qcv,
+    js_vars.Qcx,
+];
+const figLabels2 = [
+    js_vars.Sl,
+    js_vars.Scv,
+    js_vars.Scx,
+];
 
 // *********************************************************************
 // Add Your Questions here
@@ -66,7 +63,7 @@ const firstQuestions = [
         question: "What is your age?",
         name: "D1",
         type: "shortOpen",
-        validate: validAge,
+        validate: validAge ,
         invalidMessage: warningAge,
     },   
     {
@@ -81,12 +78,12 @@ const firstQuestions = [
             "Prefer not to say"
         ]    
     },    
-    // {
-    //     question: "What country do you live in?",
-    //     name: "D3",
-    //     type: "autocomplete",
-    //     list: countries,
-    // },    
+    {
+        question: "What country do you live in?",
+        name: "D3",
+        type: "autocomplete",
+        list: countries,
+    },    
     {
         question: "What is your nationality?",
         name: "D4",
@@ -119,157 +116,77 @@ const firstQuestions = [
 // Add questionnaire questions in different orders
 const shuffleQuestions = [ 
     {
-        question: "I plan tasks carefully.",
+        question: "I often feel a sense of oneness with the natural world around me.",
         name: "QT1",
         type: "scale",
     },
     {
-        question: "I do things without thinking.",
+        question: "I think of the natural world as a community to which I belong.",
         name: "QT2",
         type: "scale",
     },
     {
-        question: "I make-up my mind quickly.",
+        question: "I recognize and appreciate the intelligence of other living organisms",
         name: "QT3",
         type: "scale",
     },
     {
-        question: "I am happy-go-lucky.",
+        question: "I often feel disconnected from nature.",
         name: "QT4",
         type: "scale",
     },
     {
-        question: "I don't 'pay attention.'",
+        question: "When I think of my life, I imagine myself to be part of a larger cyclical process of living.",
         name: "QT5",
         type: "scale",
     },
     {
-        question: "I have 'racing' thoughts.",
+        question: "I often feel a kinship with animals and plants.",
         name: "QT6",
         type: "scale",
     },
     {
-        question: "I plan trips well ahead of time.",
+        question: "I feel as though I belong to the Earth as equally as it belongs to me.",
         name: "QT7",
         type: "scale",
     },
     {
-        question: "I am self controlled.",
+        question: "I have a deep understanding of how my actions affect the natural world.",
         name: "QT8",
         type: "scale",
     },
     {
-        question: "I concentrate easily.",
+        question: "I often feel part of the web of life.",
         name: "QT9",
         type: "scale",
     },
     {
-        question: "I save regularly.",
+        question: "I feel that all inhabitants of Earth, human, and nonhuman, share a common 'life force'.",
         name: "QT10",
         type: "scale",
     },
     {
-        question: "I 'squirm' at plays or lectures.",
+        question: "Like a tree can be part of a forest, I feel embedded within the broader natural world.",
         name: "QT11",
         type: "scale",
     },
     {
-        question: "I am a careful thinker.",
+        question: "When I think of my place on Earth, I consider myself to be a top member of a hierarchy that exists in nature.",
         name: "QT12",
         type: "scale",
     },
     {
-        question: "I plan for job security.",
+        question: "I often feel like I am only a small part of the natural world around me, and that I am no more important than the grass on the ground or the birds in the trees.",
         name: "QT13",
         type: "scale",
     },
     {
-        question: "I say things without thinking.",
+        question: "My personal welfare is independent of the welfare of the natural world.",
         name: "QT14",
         type: "scale",
     },
     {
-        question: "I like to think about complex problems.",
-        name: "QT15",
-        type: "scale",
-    },
-    {
-        question: "I schange jobs.",
-        name: "QT16",
-        type: "scale",
-    },
-    {
-        question: "I act 'on impulse.'",
-        name: "QT17",
-        type: "scale",
-    },
-    {
-        question: "I get easily bored when solving thought problems.",
-        name: "QT18",
-        type: "scale",
-    },
-    {
-        question: "I act on the spur of the moment.",
-        name: "QT19",
-        type: "scale",
-    },
-    {
-        question: "I am a steady thinker.",
-        name: "QT20",
-        type: "scale",
-    },
-    {
-        question: "I change residences.",
-        name: "QT21",
-        type: "scale",
-    },
-    {
-        question: "I buy things on impulse.",
-        name: "QT22",
-        type: "scale",
-    },
-    {
-        question: "I can only think about one thing at the time.",
-        name: "QT23",
-        type: "scale",
-    },
-    {
-        question: "I change hobbies.",
-        name: "QT24",
-        type: "scale",
-    },
-    {
-        question: "I spend or charge more than I earn.",
-        name: "QT25",
-        type: "scale",
-    },
-    {
-        question: "I often have extraneous thoughts when thinking.",
-        name: "QT26",
-        type: "scale",
-    },
-    {
-        question: "I am more interested in the present than the future.",
-        name: "QT27",
-        type: "scale",
-    },
-    {
-        question: "I am restless at the theater or lectures.",
-        name: "QT28",
-        type: "scale",
-    },
-    {
-        question: "I like puzzles.",
-        name: "QT29",
-        type: "scale",
-    },
-    {
-        question: "I am future oriented.",
-        name: "QT30",
-        type: "scale",
-    },
-    {
-        question: "To receive payment, Select '3'.",
+        question: "To receive payment, Select '4'.",
         name: "V2",
         type: "scale",
     },    
@@ -278,6 +195,12 @@ const shuffleQuestions = [
         name: "V3",
         type: "scale",
     },    
+    {
+        question: "How do you see yourself: are you generally a person who is prepared to behave sustainably, even when this is inconvenient or costly to you?",
+        name: "AF1",
+        type: "scale",
+        limits:  ['not at all willing','very willing']
+    },  
 ];
   
 
@@ -314,6 +237,8 @@ const FinalButtonProps = [
         sProperty: 'button QT-Next',
     },
 ];
+
+
 
 // Initialize
 document.addEventListener("DOMContentLoaded", function() {
@@ -492,8 +417,8 @@ function writeRadio(Question) {
     let values = [];
     let labels = [];
     if (typeof Question.values === 'undefined' || Question.values === null) {
-        values =BISValues;
-        labels =BISScale 
+        values =likertValues;
+        labels =likertScale 
     } else {
         values = Question.values
         // Check if labels for the values exist
@@ -544,8 +469,8 @@ function writeScale(Question) {
     let values = [];
     let limits = [];
     if (typeof Question.values === 'undefined' || Question.values === null) {
-        values =BISValues;
-        limits =BISLimits; 
+        values =likertValues;
+        limits =likertLimits; 
     } else {
         values = Question.values
         limits = Question.limits; 
