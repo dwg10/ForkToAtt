@@ -33,9 +33,17 @@
 <!-- Dot buttons below -->
 <div class="dot_row">
   {% for slide in Slides %}
-    <span class="dot" onclick="currentSlide({{ forloop.counter0 }})"></span>
+  <span class="dot" onclick="currentSlide({{ forloop.counter0 }})"></span>
   {% endfor %}
 </div>
+
+<!-- <div class="dot_row">
+  <span class="dot" onclick="currentSlide(0)"></span>
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span>
+  <span class="dot" onclick="currentSlide(4)"></span>
+</div> -->
 
 <button id="submit" style="display: none;"></button>
 <input type="hidden" id="sSlideSequence" name="sSlideSequence" val="">

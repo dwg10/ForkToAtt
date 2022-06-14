@@ -1,4 +1,4 @@
-/* SETUP FONT SIZES */
+* SETUP FONT SIZES */
 
 
 /* CSS STYLESHEET FOR ECOLABELS EXPERIMENT */
@@ -325,4 +325,3 @@ input[type="checkbox"]:required:valid + label {
     width: 1em;
     height: auto;
 }
-

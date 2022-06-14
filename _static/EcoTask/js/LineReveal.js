@@ -34,7 +34,6 @@ iDec.name       = 'iDec';
 iDec.id         = 'iDec';
 iDec.value      = '';
 
-
 // Create hidden input (Pressed Buttons)
 let sButtonClick        = document.createElement("input");
 sButtonClick.type       = 'hidden';

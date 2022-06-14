@@ -11,16 +11,15 @@
     <!-- context -->
     <div class="ContentContainer"> 
         <div class="text-container-end" id="EndResults">
-            <p class="title"> The experiment has ended. These are your results: </p>
+            <p class="title"> <u>You have reached the end of the experiment. These are your results:</u></p>
             <div class="text-container">
                 <ul>
-                    <li> You guessed {{ iCorrect }} correct ratings, which grants you: £{{ BeliefBonus }} </li>
-                    <li> The randomly selected trial is: {{ SelectedTrial }} </li>
-                    <li> The Price of the product you selected was: £{{ Price }} </li>
-                    <li> The value of the product was: £{{ Q }} </li>
-                    <li> You total bonus Payment is: £{{ Bonus }} </li>
-                    <li> The number of trees planted will be: {{ S }} </li>
-                    <li> This means we will plant at least {{ S_rounded }} trees in {{ TreeLocation }}! </li>
+                    <li> Out of {{ iTotalTrials }} trials, you chose the most valuable basket iCORRECT times. </li>
+                    <li> The randomly selected trial is trial <b>{{ iSelectedTrial }}</b> from <b>{{ sSelectedTrialBlock }}.</b> </li>
+                    <li> In this trial, you {{ bCorrectBonus }} choose the most valuable basket.</li>
+                    <li> Hence, you {{ bCorrectBonus }} qualify for the bonus payment of €{{ iBonusPayment }}. </li>
+                    <li> As mentioned earlier, two participants will be selected at random to be eligible for the fixed payment and the bonus payment. </li>
+                    <li> You will be contacted before 15 July if you are selected. </li>
                 </ul>
             </div>
         </div>

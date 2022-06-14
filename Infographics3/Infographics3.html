@@ -18,7 +18,8 @@
       <!-- context -->
       <div class="ContentContainer"> 
         <p style="align-self: center;">
-          Deze tekst nog veranderen.
+          You will now additional important information regarding the values of the three different balls.
+          Please note that you will only obtain this information <b>once.</b>
         </p>
         
       </div>
@@ -34,7 +35,7 @@
       </div>
     </div>
 
-    <div class="slide-item" id="slide-4">
+    <div class="slide-item" id="slide-2">
       <!-- Title -->
         
       <!-- context -->
@@ -42,40 +43,24 @@
 
         <div class="flex-questions">
           <div style="margin-bottom:1em;">
-            Just to make sure we explained everything clearly, please answer the following questions: 
+            Just to make sure we explained everything clearly, please answer the following question: 
           </div>
           <!-- Question1 -->
           <div class="question-wrapper"> 
             <label for="Q1"> 
-              What is the total value of three {{ vColours.colour1 }} (<img class="symbol" src="{% static vColours.sColour1 %}" />) balls?
+              Please fill in the missing word. 
+              The new value of one {{ vColours.colour2 }} (<img class="symbol" src="{% static vColours.sColour2 %}" />) ball is ... compared to the old value?
             </label>
             <select name="Q1" id="Q1" class="dropdown ControlQuestions">
               <option value="nothing">--Select--</option>
-              <option value="1"> 3*{{ lValuesSecond.sValueHigh }}  </option>
-              <option value="2"> 2*{{ lValuesSecond.sValueLow }}  </option>
-              <option value="3"> 4*{{ lValuesSecond.sValueMid }}  </option>
+              <option value="1"> {{ lValuesSecond.sValueHLYes }}  </option>
+              <option value="2"> {{ lValuesSecond.sValueHLNo }}  </option>
             </select>
           </div>
           <div class="hint" id="hint1">
             Incorrect
           </div>
-          <!-- Question1 -->
-          <div class="question-wrapper"> 
-            <label for="Q2"> 
-              What is the total value of three {{ vColours.colour1 }} (<img class="symbol" src="{% static vColours.sColour1 %}" />) balls?
-            </label>
-            <select name="Q2" id="Q2" class="dropdown ControlQuestions">
-              <option value="nothing">--Select--</option>
-              <option value="1"> 3*{{ lValuesSecond.sValueHigh }}  </option>
-              <option value="2"> 2*{{ lValuesSecond.sValueLow }}  </option>
-              <option value="3"> 4*{{ lValuesSecond.sValueMid }}  </option>
-            </select>
-          </div>
-          <div class="hint" id="hint2">
-            Incorrect
-          </div>    
           <button type="button" id="submitAnswer" class="button" onclick="validateAnswers()"> Submit </button>
-
         </div>
       </div>
 

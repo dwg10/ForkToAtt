@@ -18,7 +18,8 @@
       <!-- context -->
       <div class="ContentContainer"> 
         <p style="align-self: center;">
-          Deze tekst nog veranderen.
+          You will now receive the three possible colours of the balls and their values.
+          Please note that you will only obtain this information once.
         </p>
         
       </div>
@@ -34,7 +35,7 @@
       </div>
     </div>
 
-    <div class="slide-item" id="slide-4">
+    <div class="slide-item" id="slide-2">
       <!-- Title -->
         
       <!-- context -->
@@ -47,13 +48,13 @@
           <!-- Question1 -->
           <div class="question-wrapper"> 
             <label for="Q1"> 
-              What is the total value of three {{ vColours.colour1 }} (<img class="symbol" src="{% static vColours.sColour1 %}" />) balls?
+              What is the value of one {{ vColours.colour2 }} (<img class="symbol" src="{% static vColours.sColour2 %}" />) ball?
             </label>
             <select name="Q1" id="Q1" class="dropdown ControlQuestions">
               <option value="nothing">--Select--</option>
-              <option value="1"> 3*{{ lValuesFirst.sValueHigh }}  </option>
-              <option value="2"> 2*{{ lValuesFirst.sValueLow }}  </option>
-              <option value="3"> 4*{{ lValuesFirst.sValueMid }}  </option>
+              <option value="1"> 2  </option>
+              <option value="2"> 5 </option>
+              <option value="3"> {{ lValuesFirst.sValueMid }}  </option>
             </select>
           </div>
           <div class="hint" id="hint1">
@@ -66,9 +67,9 @@
             </label>
             <select name="Q2" id="Q2" class="dropdown ControlQuestions">
               <option value="nothing">--Select--</option>
-              <option value="1"> 3*{{ lValuesFirst.sValueHigh }}  </option>
-              <option value="2"> 2*{{ lValuesFirst.sValueLow }}  </option>
-              <option value="3"> 4*{{ lValuesFirst.sValueMid }}  </option>
+              <option value="1"> {{ lValuesFirst.sValueHighThreeTimes }}  </option>
+              <option value="2"> {{ lValuesFirst.sValueLowFourTimes }}  </option>
+              <option value="3"> {{ lValuesFirst.sValueMid }}  </option>
             </select>
           </div>
           <div class="hint" id="hint2">
@@ -93,8 +94,8 @@
     <span class="dot" onclick="currentSlide(0)"></span>
     <span class="dot" onclick="currentSlide(1)"></span>
     <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
-    <span class="dot" onclick="currentSlide(4)"></span>
+    <!-- <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span> -->
 </div>
 
 

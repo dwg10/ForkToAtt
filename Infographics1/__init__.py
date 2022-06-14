@@ -22,23 +22,27 @@ class C(BaseConstants):
     sPathLB             = sImagePath+'LightBlue.png'
     sPathR              = sImagePath+'Red.png'
     sPathY              = sImagePath+'Yellow.png'
-    iRandomTreatment    = 4 # 1 to 4
-    iRandomColour       = 4 # 1 to 4
+    iRandomTreatment    = 5 # 1 to 4, 1 more?
+    iRandomColour       = 5 # 1 to 4, 1 more?
     
     # Nog veranderen
     lEqual = dict(        
         sValueHigh = '10',
         sValueMid = '10', 
         sValueLow = '10',
+        sValueHighThreeTimes = '30',
+        sValueLowFourTimes = '40',
     )
     lUnequal = dict(        
         sValueHigh = '20',
         sValueMid = '10', 
         sValueLow = '5',
+        sValueHighThreeTimes = '60',
+        sValueLowFourTimes = '20',
     )
     lAttrRYB = dict(        
-        attr = 'Colour Values',
         title = 'Colour Values',
+        titleB2 = 'Value Change',
         colour1 = 'Blue',
         colour2 = 'Red',
         colour3 = 'Yellow',
@@ -47,8 +51,8 @@ class C(BaseConstants):
         sColour3 = sPathY, 
     )
     lAttrHR = dict(
-        attr = 'Colour Values',
         title = 'Colour Values',
+        titleB2 = 'Value Change',
         colour1 = 'Red',
         colour2 = 'Light Blue',
         colour3 = 'Blue',
@@ -57,8 +61,8 @@ class C(BaseConstants):
         sColour3 = sPathB,
     )
     lAttrMR = dict(
-        attr = 'Colour Values',
         title = 'Colour Values',
+        titleB2 = 'Value Change',
         colour1 = 'Blue',
         colour2 = 'Red',
         colour3 = 'Light Blue',
@@ -67,8 +71,8 @@ class C(BaseConstants):
         sColour3 = sPathLB,
     )
     lAttrLR = dict(
-        attr = 'Colour Values',
         title = 'Colour Values',
+        titleB2 = 'Value Change',
         colour1 = 'Light Blue',
         colour2 = 'Blue',
         colour3 = 'Red',
@@ -82,18 +86,19 @@ def creating_session(subsession):
     ## SETUP FOR PARTICIPANT
     for player in subsession.get_players():
         p, session = player.participant, subsession.session
-        iTreatment = session.config['iTreatment'] # Snap nog even niet of het nou 4 of 5 treatments kunnen zijn
+        iTreatment = session.config['iTreatment'] # 5 treatments
         iColour = session.config['iColour']
         if (iTreatment!=C.iRandomTreatment):
             player.iTreatment = p.iTreatment = iTreatment 
         else:
             player.iTreatment = p.iTreatment = iTreatment = random.randint(1,C.iRandomTreatment)
-        if (iTreatment!=C.iRandomColour):
+        if (iColour!=C.iRandomColour):
             player.iColour = p.iColour = iColour 
         else:
-            player.iColour =  p.iColour = iColour = random.randint(1,C.iColour)
+            player.iColour =  p.iColour = iColour = random.randint(1,C.iRandomColour)
         
         print('Treatment for participant: {}'.format(p.iTreatment))
+        print('Colour Scheme for participant: {}'.format(p.iColour))
         lAttrRYB = C.lAttrRYB.copy()
         lAttrHR = C.lAttrHR.copy()
         lAttrMR = C.lAttrMR.copy()
@@ -125,41 +130,26 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     # Check hoeveel hier nog nodig van is
     sAttrOrder          = models.StringField()
-    dRTbelief           = models.FloatField(blank=True)
     dRTinfographics     = models.FloatField(blank=True)
     iTreatment          = models.IntegerField()
     iColour             = models.IntegerField()
     sSlideSequence      = models.StringField(blank=True)
     sSlideTime          = models.StringField(blank=True)
 
-    # Beliefs
-    B01 = models.FloatField()
-    B02 = models.FloatField()
-    B03 = models.FloatField()
-    B11 = models.FloatField()
-    B12 = models.FloatField()
-    B13 = models.FloatField()
-
-
 # PAGES
-class Infographics(Page):
+class Infographics1(Page):
     form_model = 'player'
     form_fields = [ 
         'sSlideSequence',
         'sSlideTime',
         'dRTinfographics',
+        # 'iTreatment',
+        # 'iColour',
         ]
 
     @staticmethod
     def js_vars(player: Player):
         lSolutions = ['3','1']
-        if player.iTreatment ==1:
-            lSolutions.extend(['15','15'])
-        elif player.iTreatment ==2:
-            lSolutions.extend(['15','2.5'])
-        elif player.iTreatment ==3:
-            lSolutions.extend(['27.5','15'])
-
 
         return dict(
             lSolutions = lSolutions
@@ -172,7 +162,7 @@ class Infographics(Page):
             vColours = player.participant.vColours
         )
 
-class FirstCheck(Page):
+class FirstCheck1(Page):
     pass
 
-page_sequence = [FirstCheck, Infographics]
+page_sequence = [FirstCheck1, Infographics1]

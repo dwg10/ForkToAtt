@@ -208,14 +208,14 @@ function displayContent(sClassName, sButtonClass='btn-outcome') {
   let lBtnOutcome = document.getElementsByClassName(`${sClassName} ${sButtonClass}`);
   // Reveal their content
   for (let i=0; i<lBtnOutcome.length; i++) {
-      let content = lBtnOutcome[i].getElementsByClassName('btn-content')[0];
-      let hidden  = lBtnOutcome[i].getElementsByClassName('btn-hidden')[0];
-      // hide content
-      content.classList.add('active');
-      content.classList.remove('inactive');
-      // reveal hidden display
-      hidden.classList.add('inactive');
-      hidden.classList.remove('active');
+    let content = lBtnOutcome[i].getElementsByClassName('btn-content')[0];
+    let hidden  = lBtnOutcome[i].getElementsByClassName('btn-hidden')[0];
+    // hide content
+    content.classList.add('active');
+    content.classList.remove('inactive');
+    // reveal hidden display
+    hidden.classList.add('inactive');
+    hidden.classList.remove('active');
   }
 };
 

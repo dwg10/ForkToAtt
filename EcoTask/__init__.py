@@ -17,30 +17,32 @@ Should create the buckets with balls for the first code
 class Constants(BaseConstants):
     name_in_url         = 'Main-Task'
     ## Colour Sets (Quantities) To be changed according to mail
-    lDiffH = [[2,3], [10,10], [5, 5], [7,10], [10,10], [5,3], [12,20]]
-    lDiffM = [[2,2], [10,10], [6, 5], [8,8], [7,8], [6,8], [20,15]]
-    lDiffL = [[2,2], [12,10], [5, 5], [9,7], [9,8], [7,7], [15,5]]
+    lDiffH = [[5,6], [5,12], [8,10], [14, 20], [10,12], [3,5], [6,10]]
+    lDiffM = [[5,2], [12,10], [20,3], [10, 3], [7,8], [5,8], [8,10]]
+    lDiffL = [[4,2], [6,2], [2,10], [5, 10], [18,5], [11,7], [3,8]]
+    lMostValue = [[1,0], [0,1], [1,0], [0,1], [1,0], [0,1], [0,1]]
 
     lDiff1H, lDiff1M, lDiff1L, lDiff2H, lDiff2M, lDiff2L = ([] for i in range(6))
     for list in lDiffH:
-        lDiff1H.append([x+1 for x in list])
-        lDiff2H.append([x*2 for x in list])
+        lDiff1H.append([x*2 for x in list])
+        lDiff2H.append([x*3 for x in list])
 
     for list in lDiffM:
-        lDiff1M.append([x+1 for x in list])
-        lDiff2M.append([x*2 for x in list])
+        lDiff1M.append([x*2 for x in list])
+        lDiff2M.append([x*3 for x in list])
 
     for list in lDiffL:
-        lDiff1L.append([x+1 for x in list])
-        lDiff2L.append([x*2 for x in list])
+        lDiff1L.append([x*2 for x in list])
+        lDiff2L.append([x*3 for x in list])
 
     lDiffAllH = lDiffH + lDiff1H + lDiff2H
     lDiffAllM = lDiffM + lDiff1M + lDiff2M
     lDiffAllL = lDiffL + lDiff1L + lDiff2L
+    lMostValues21 = lMostValue + lMostValue + lMostValue
       
     ## Number of trials
-    num_reps            = 1 # number of repetitions per permutation
-    num_repsEq          = 2 # Number of cases with equal sustainability
+    # num_reps            = 1 # number of repetitions per permutation
+    # num_repsEq          = 2 # Number of cases with equal sustainability
     num_prounds         = 3 # Number of Practice Rounds  
     num_rounds          = 21 + num_prounds # Number of rounds
     players_per_group   = None
@@ -56,6 +58,7 @@ class Player(BasePlayer):
     ## Decision Variables
     iDec                = models.IntegerField(blank=True)
     dRT                 = models.FloatField(blank=True)
+    iTest               = models.IntegerField(blank=True)
     ## Attention Variables
     sButtonClick        = models.LongStringField(blank=True)
     sTimeClick          = models.LongStringField(blank=True)
@@ -72,12 +75,17 @@ class Player(BasePlayer):
     dFocusLostT         = models.FloatField(blank=True)
     iFullscreenChange   = models.IntegerField(blank=True)
     ## Attributes
-    Mid0                  = models.StringField(blank=True)
-    Mid1                  = models.StringField(blank=True)
-    High0                  = models.StringField(blank=True)
-    High1                  = models.StringField(blank=True)
-    Low0                  = models.StringField(blank=True)
-    Low1                  = models.StringField(blank=True)
+    Corr0B1                  = models.StringField(blank=True)
+    Corr1B1                  = models.StringField(blank=True)               
+    Mid0B1                  = models.StringField(blank=True)
+    Mid1B1                  = models.StringField(blank=True)
+    High0B1                  = models.StringField(blank=True)
+    High1B1                  = models.StringField(blank=True)
+    Low0B1                  = models.StringField(blank=True)
+    Low1B1                  = models.StringField(blank=True)
+    ## Bonus trial
+    iSelectedTrialB1        = models.IntegerField(blank=True)
+    sCorrB1                 = models.StringField(blank=True)
 
 # FUNCTIONS
 
@@ -86,16 +94,17 @@ def creating_session(subsession):
     if subsession.round_number == 1:
         for player in subsession.get_players():
             p, session = player.participant, subsession.session
-            lTreat, lRownames   = createTreatment()
+            lTreat, lRownames, lCorrB1   = createTreatment()
             p.vRownames         = lRownames
-            p.mTreat            = lTreat             
-            p.SelectedTrial     = random.choice(range(Constants.num_prounds+1,Constants.num_rounds))
-            print('Trial selected for participant {}: {}'.format(p.code,p.SelectedTrial))
+            p.mTreat            = lTreat
+            p.lCorrB1           = lCorrB1             
+            p.iSelectedTrialB1    = random.choice(range(1,Constants.num_rounds))
+            print('Random trial selected for participant from block 1 {}: {}'.format(p.code,p.iSelectedTrialB1))
     ## SETUP FOR PLAYER ROUNDS
     for player in subsession.get_players():
         ## Load participant and save participant variables in player
         p = player.participant
-        player.sAttrOrder = p.sAttrOrder = p.vRownames[0] # Used to be 1 # Order of presentation of attributes. 1st attribute always price, then Q or S
+        player.sAttrOrder = p.sAttrOrder = p.vRownames[0] # Order of presentation of attributes, either High or Low
         ## Round Variables
         total_rounds = Constants.num_rounds-Constants.num_prounds
         round = player.round_number-Constants.num_prounds
@@ -103,37 +112,39 @@ def creating_session(subsession):
         if round<1: ## These are practice rounds, random trial selected
             player.iPracticeRound   = 1
             player.iBlockTrial      = random.randint(total_rounds)
-            x = int( player.iBlockTrial-1)
-            lAttr = p.mTreat[x]
+            x = int(player.iBlockTrial-1)
         elif (round<=total_rounds): ## These are the trials of the block
             player.iBlockTrial = int(round)
             x = int(round-1)
-            lAttr = p.mTreat[x]
+        
+        lAttr = p.mTreat[x]
+        lCorr = p.lCorrB1[x]
 
         ## Randomize if mouse starts on left or right
         player.bStartLeft = random.choice([True,False])
         # Check order of Attributes and save them as player variables
-        # DEZE QUA NAAM (Mid0 ENZO) VERANDEREN
-        player.Mid0   = str(lAttr[1][0]) # Mid, Q is High, S is Low
-        player.Mid1   = str(lAttr[1][1])
+        player.Mid0B1   = str(lAttr[1][0]) # Mid 
+        player.Mid1B1   = str(lAttr[1][1])
+        player.Corr0B1 = str(lCorr[0])
+        player.Corr1B1 = str(lCorr[1])
         if p.vRownames[0]=='Low':
-            player.High0 = str(lAttr[2][0])
-            player.High1 = str(lAttr[2][1]) #3
-            player.Low0 = str(lAttr[0][0]) #4
-            player.Low1 = str(lAttr[0][1]) #5
+            player.High0B1 = str(lAttr[2][0])
+            player.High1B1 = str(lAttr[2][1]) #3
+            player.Low0B1 = str(lAttr[0][0]) #4
+            player.Low1B1 = str(lAttr[0][1]) #5
         else:
-            player.High0 = str(lAttr[0][0]) #4
-            player.High1 = str(lAttr[0][1]) #5
-            player.Low0 = str(lAttr[2][0])
-            player.Low1 = str(lAttr[2][1]) #3
+            player.High0B1 = str(lAttr[0][0]) #4
+            player.High1B1 = str(lAttr[0][1]) #5
+            player.Low0B1 = str(lAttr[2][0])
+            player.Low1B1 = str(lAttr[2][1]) #3
 
 # # Functions
 # def join2String(list, delimiter= ','):
 #         return delimiter.join(map(str,list))
 
 def createTreatment():
-    n = Constants.num_reps
-    n_eq = Constants.num_repsEq
+    # n = Constants.num_reps
+    # n_eq = Constants.num_repsEq
 
     ## Sets
     iSize = int((Constants.num_rounds-Constants.num_prounds))
@@ -142,47 +153,49 @@ def createTreatment():
     lDiffAllH = Constants.lDiffAllH
     lDiffAllM = Constants.lDiffAllM
     lDiffAllL = Constants.lDiffAllL
+    lMostValues21 = Constants.lMostValues21
 
-    lTreatments = ["" for x in range(iSize)] # Initialiseren variabelen
-    lAttr = [] # DIT ZELF TOEGEVOEGD
+    lTreatments = ["" for x in range(iSize)]
+    lCorrB1 = ["" for x in range(iSize)]
+    lAttr = [] 
+    lCorr = []
 
     # Establish order of qualities
     order = sample(['High','Low'],2)
+    leftRightOrder = random.choice([True,False])
     counter = 0
     randomOrder = sample(range(len(lDiffAllH)), len(lDiffAllH))
     for i in randomOrder:
         # Invert order if in this trial outcomes are flipped
-        # Even uitgezet
-        if random.choice([True,False]):
+        if (leftRightOrder == True):
             high        = copy.copy((lDiffAllH[i]))[::-1]
             low         = copy.copy((lDiffAllL[i]))[::-1]
             mid         = copy.copy((lDiffAllM[i]))[::-1]
+            lCorr        = copy.copy((lMostValues21[i]))[::-1]
         else:
             high        = copy.copy((lDiffAllH[i]))
             low         = copy.copy((lDiffAllL[i]))
             mid         = copy.copy((lDiffAllM[i]))
-
-        # high        = copy.copy((lDiffAllH[i]))
-        # low         = copy.copy((lDiffAllL[i]))
-        # mid         = copy.copy((lDiffAllM[i]))
+            lCorr        = copy.copy((lMostValues21[i]))
 
         # Add attributes depending order
         if order[0] == 'High':
             lAttr.append(high)
-            lAttr.append(mid) # Toegevoegd
+            lAttr.append(mid)
             lAttr.append(low)
         else: 
             lAttr.append(low)
-            lAttr.append(mid) # Toegevoegd
+            lAttr.append(mid)
             lAttr.append(high)
         lTreatments[counter] = lAttr
+        lCorrB1[counter] = lCorr
+        
         lAttr = []
+        lCorr = []
         counter +=1
     
     lAttList = [order[0], 'Mid', order[1]]
-    # random.shuffle(lTreatments)
-    # Nu bepaald door order
-    return lTreatments, lAttList
+    return lTreatments, lAttList, lCorrB1
 
 # PAGES
 class Task(Page):
@@ -207,36 +220,35 @@ class Task(Page):
         print('Part: {}, trial: {}'.format(participant.label, player.round_number))
         vRownames = participant.vRownames   ## Variable order
         vColours = participant.vColours
-        # colour1 = vColours['colour1']
-        # colour2 = vColours['colour2']
-        # colour3 = vColours['colour3']
-        sColour1 = vColours['sColour1']
-        sColour2 = vColours['sColour2']
-        sColour3 = vColours['sColour3']
 
         if vRownames[0]=='Low': # Quality
-            A10 = player.Low0
-            A11 = player.Low1
-            A20 = player.High0
-            A21 = player.High1
+            A00 = player.Low0B1
+            A01 = player.Low1B1
+            A20 = player.High0B1
+            A21 = player.High1B1
+            sColourFirst = vColours['sColour3']
+            sColourSecond = vColours['sColour2']
+            sColourThird = vColours['sColour1']
         else:
-            A10 = player.High0
-            A11 = player.High1
-            A20 = player.Low0
-            A21 = player.Low1
+            A00 = player.High0B1
+            A01 = player.High1B1
+            A20 = player.Low0B1
+            A21 = player.Low1B1
+            sColourFirst = vColours['sColour1']
+            sColourSecond = vColours['sColour2']
+            sColourThird = vColours['sColour3']
         
         return dict(
             Attr0 = vRownames[0],
             Attr1 = vRownames[1],
             Attr2 = vRownames[2],
-            vColours = player.participant.vColours,
-            sColour1 = sColour1,
-            sColour2 = sColour2,
-            sColour3 = sColour3,
-            Mid0 = player.Mid0,
-            Mid1 = player.Mid1,
-            A10 = A10,
-            A11 = A11,
+            sColour1 = sColourFirst,
+            sColour2 = sColourSecond,
+            sColour3 = sColourThird,
+            A10 = player.Mid0B1,
+            A11 = player.Mid1B1,
+            A00 = A00,
+            A01 = A01,
             A20 = A20,
             A21 = A21,
         ) 
@@ -256,21 +268,37 @@ class Task(Page):
     @staticmethod
     def before_next_page(player, timeout_happened):
         participant = player.participant
+        Corr0B1 = player.Corr0B1
+        Corr1B1 = player.Corr1B1
+        participant.iTest = 0
         # Add Focus variables to total if it's not practice trial
         if (player.round_number > Constants.num_prounds):
             participant.iOutFocus = int(participant.iOutFocus) + player.iFocusLost
             participant.iFullscreenChanges = int(participant.iFullscreenChanges) + player.iFullscreenChange
             participant.dTimeOutFocus = float(participant.dTimeOutFocus) + player.dFocusLostT
-        # If this is selected trial, save relevant variables
-        if (participant.SelectedTrial==player.round_number):
-            if (player.iDec==0):
-                participant.Mid = player.Mid0
-                participant.High = player.High0
-                participant.Low = player.Low0
+            if (player.iDec == 0):
+                participant.iTest = int(participant.iTest) + int(Corr0B1)
             else:
-                participant.Mid = player.Mid1
-                participant.High = player.High1
-                participant.Low = player.Low1
+                participant.iTest = int(participant.iTest) + int(Corr1B1)  
+        # If this is selected trial, save relevant variables
+        if (participant.iSelectedTrialB1==player.round_number):
+            if (player.iDec==0):
+                # participant.MidB1 = player.Mid0B1
+                # participant.HighB1 = player.High0B1
+                # participant.LowB1 = player.Low0B1
+                if (int(player.Corr1B1) + int(player.iDec) == 1):
+                    participant.sCorrB1 = "did"
+                else:
+                    participant.sCorrB1 = "did not"
+            else:
+                # participant.MidB1 = player.Mid1B1
+                # participant.HighB1 = player.High1B1
+                # participant.LowB1 = player.Low1B1
+                # participant.CorrSelB1 = player.Corr1B1 * player.iDec
+                if (int(player.Corr1B1) * int(player.iDec) == 1):
+                    participant.sCorrB1 = "did"
+                else:
+                    participant.sCorrB1 = "did not"
        
 
 class Between(Page):
@@ -314,6 +342,5 @@ class Ready(Page):
             (player.round_number==1) or (player.round_number==Constants.num_prounds+1)
         )
         
-
 page_sequence = [Ready, Between, Task]
 # page_sequence = [Task]

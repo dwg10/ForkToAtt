@@ -4,12 +4,13 @@ SESSION_CONFIGS = [
     dict(
     name='session_config',
     display_name='Ecolabels Config',
-    num_demo_participants=2,
+    num_demo_participants=6,
     # app_sequence=['Instructions', 'EcoTask', 'Infographics2','EcoTask2','EndBelief','Questionnaire' ,'EndPage'],
-    # app_sequence=['Instructions', 'Infographics1', 'EcoTask', 'Infographics3', 'EcoTask2'],
-    app_sequence=['Instructions', 'Infographics1', 'Infographics3', 'EcoTask2'], #, 'EndBelief','Questionnaire','EndPage'],
-    iTreatment = 4,
-    iColour = 1,
+    app_sequence=['Instructions', 'Infographics1', 'EcoTask', 'Infographics3', 'EcoTask2', 'Questionnaire', 'EndPage'],
+    # app_sequence=['Infographics1', 'EcoTask', 'Infographics3', 'EcoTask2', 'EndPage'],
+    # app_sequence=['Instructions', 'Infographics1', 'Infographics3', 'EcoTask2'], #, 'EndBelief','Questionnaire','EndPage'],
+    iTreatment = 5, # 1 meer dan het aantal treatments
+    iColour = 5, # 1 meer dan het aantal treatments
     iTimeOut=0,
     bRequireFS=True,
     bCheckFocus=True,
@@ -28,6 +29,17 @@ SESSION_CONFIGS = [
         name='Questionnaire',
         num_demo_participants= 1,
         app_sequence=['Questionnaire']
+    ),
+        dict(
+        name='Endpage',
+        num_demo_participants= 1,
+        app_sequence=['EndPage'],
+        bRequireFS=True,
+        bCheckFocus=True,
+        # dPixelRatio=True,
+        iTimeOut=0
+        # 'StartLeft'         : player.bStartLeft,
+        # dPixelRatio'       : p.dPixelRatio,
     ),
     dict(
         name='Part1',
@@ -61,17 +73,24 @@ SESSION_CONFIGS = [
 # the session config can be accessed from methods in your apps as self.session.config,
 # e.g. self.session.config['participation_fee']
 
-
 PARTICIPANT_FIELDS = [
     'treatment',
     'colour',
+    'iTest',
+    'iCounterCorrect',
     'PresOrder',
     'mTreat',
     'vRownames',
-    'SelectedTrial',
-    'Mid',
-    'High',
-    'Low',
+    'iSelectedTrial',
+    'iSelectedTrialB1',
+    'iSelectedTrialB2',
+    'sSelectedTrialBlock',
+    'bCorrectBonus',
+    'sCorr',
+    'sCorrB1',
+    'sCorrB2',
+    'CorrSelB1',
+    'CorrSelB2',
     'ProlificID',
     'Bonus',
     'TreeAmount',
@@ -90,8 +109,6 @@ PARTICIPANT_FIELDS = [
     'vColours',
     'lValuesFirst',
     'lValuesSecond',
-    'sRandom',
-    'qRandom',
     ]
 
 SESSION_CONFIG_DEFAULTS = dict(

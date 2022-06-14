@@ -22,36 +22,39 @@ class C(BaseConstants):
     sPathLB             = sImagePath+'LightBlue.png'
     sPathR              = sImagePath+'Red.png'
     sPathY              = sImagePath+'Yellow.png'
-    iRandomTreatment    = 4 # 1 to 4
-    iRandomColour       = 4 # 1 to 4
+    # iRandomTreatment    = 4 # 1 to 4
+    # iRandomColour       = 4 # 1 to 4
     
     # Nog veranderen
     lEqualUp = dict(        
         sValueHigh = '10',
         sValueMid = '20', 
         sValueLow = '10',
-        sValueRelative = 'worth more than the value of the other-coloured ',
-        sPossibleColour = '',
+        sValueHLYes = 'Higher',
+        sValueHLNo = 'Lower',
     )
     lEqualDown = dict(        
         sValueHigh = '10',
         sValueMid = '5', 
         sValueLow = '10',
-        sValueRelative = 'worth less than the value of the other-coloured ',
+        sValueHLYes = 'Lower',
+        sValueHLNo = 'Higher',
     )
     lUnequalUp = dict(        
         sValueHigh = '20',
         sValueMid = '20', 
         sValueLow = '5',
-        sValueRelative = 'the same as the value of the other balls.'
-        
+        sValueHLYes = 'Higher',
+        sValueHLNo = 'Lower',
     )
     lUnequalDown = dict(        
         sValueHigh = '20',
         sValueMid = '5', 
         sValueLow = '5',
+        sValueHLYes = 'Lower',
+        sValueHLNo = 'Higher',
     )
-    lAttrRYB = dict(        
+"""     lAttrRYB = dict(        
         title = 'Value Change',
         colour1 = 'Blue',
         colour2 = 'Red',
@@ -86,7 +89,7 @@ class C(BaseConstants):
         sColour1 = sPathLB,
         sColour2 = sPathB,
         sColour3 = sPathR,
-    )
+    ) """
 
 # FUNCTIONS 
 def creating_session(subsession):
@@ -104,11 +107,11 @@ def creating_session(subsession):
         # else:
         #     player.iColour =  p.iColour = iColour = random.randint(1,C.iColour)
         
-        print('Treatment for participant: {}'.format(p.iTreatment))
-        lAttrRYB = C.lAttrRYB.copy()
-        lAttrHR = C.lAttrHR.copy()
-        lAttrMR = C.lAttrMR.copy()
-        lAttrLR = C.lAttrLR.copy()
+        # print('Treatment for participant in block 2: {}'.format(p.iTreatment))
+        # lAttrRYB = C.lAttrRYB.copy()
+        # lAttrHR = C.lAttrHR.copy()
+        # lAttrMR = C.lAttrMR.copy()
+        # lAttrLR = C.lAttrLR.copy()
         lEqualUp = C.lEqualUp.copy()
         lEqualDown = C.lEqualDown.copy()
         lUnequalUp = C.lUnequalUp.copy()
@@ -123,14 +126,14 @@ def creating_session(subsession):
         else:
             p.lValuesSecond = lEqualDown
         
-        if (p.iColour==1):
+"""         if (p.iColour==1):
             p.vColours = lAttrRYB
         elif (p.iColour==2):
             p.vColours = lAttrHR
         elif (p.iColour==3):
             p.vColours = lAttrMR
         else:
-            p.vColours = lAttrLR 
+            p.vColours = lAttrLR  """
 
 class Subsession(BaseSubsession):
     pass
@@ -141,45 +144,31 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     # Check hoeveel hier nog nodig van is
     sAttrOrder          = models.StringField()
-    dRTbelief           = models.FloatField(blank=True)
     dRTinfographics     = models.FloatField(blank=True)
     iTreatment          = models.IntegerField()
     iColour             = models.IntegerField()
     sSlideSequence      = models.StringField(blank=True)
     sSlideTime          = models.StringField(blank=True)
 
-    # Beliefs
-    B01 = models.FloatField()
-    B02 = models.FloatField()
-    B03 = models.FloatField()
-    B11 = models.FloatField()
-    B12 = models.FloatField()
-    B13 = models.FloatField()
-
-
 # PAGES
-class Infographics(Page):
+class Infographics3(Page):
     form_model = 'player'
     form_fields = [ 
         'sSlideSequence',
         'sSlideTime',
         'dRTinfographics',
+        # 'iTreatment',
+        # 'iColour',
         ]
 
     @staticmethod
     def js_vars(player: Player):
-        lSolutions = ['3','1']
-        # if player.iTreatment ==1:
-        #     lSolutions.extend(['15','15'])
-        # elif player.iTreatment ==2:
-        #     lSolutions.extend(['15','2.5'])
-        # elif player.iTreatment ==3:
-        #     lSolutions.extend(['27.5','15'])
-
+        lSolutions = ['1']
 
         return dict(
             lSolutions = lSolutions
         )
+    
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
@@ -188,7 +177,7 @@ class Infographics(Page):
             vColours = player.participant.vColours
         )
 
-class FirstCheck(Page):
+class FirstCheck3(Page):
     pass
 
-page_sequence = [FirstCheck, Infographics]
+page_sequence = [FirstCheck3, Infographics3]

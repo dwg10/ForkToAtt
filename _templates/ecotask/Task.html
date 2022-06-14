@@ -18,15 +18,12 @@
             InitializeFriendlyChecks(body, bRequireFS,bCheckFocus);             // Initialize FS and focus checks
             InitializeVT(body);                                                 // Initialize visual tracing
             hideEverything();                                                   // Hide Everything at the beginning                     
-            // ConvertButtons2VT('r0', sActivation = 'mouseover', 'r0');           // Mouseover for Row0
-            // ConvertButtons2VT('r1', sActivation = 'mouseover', 'r1');           // Mouseover for Row1
-            // ConvertButtons2VT('r2', sActivation = 'mouseover', 'r2');           // Mouseover for Row2
-            ConvertButtons2VT('r0', sActivation = 'mouseover', 'r0');           // Mouseover for Row0
-            ConvertButtons2VT('r1', sActivation = 'mouseover', 'r1');           // Mouseover for Row1
-            ConvertButtons2VT('r2', sActivation = 'mouseover', 'r2');           // Mouseover for Row2
-            ConvertButtons2VT('c0', sActivation = 'mouseover', 'c0');           // Mouseover for Col0
-            ConvertButtons2VT('c1', sActivation = 'mouseover', 'c1');           // Mouseover for Col1
-            ConvertButtons2VT('c2', sActivation = 'mouseover', 'c2');           // Mouseover for Col2
+            ConvertButtons2VT('r0 c0', sActivation = 'mouseover', 'r0 c0');           // Mouseover for Row0 Col0
+            ConvertButtons2VT('r1 c0', sActivation = 'mouseover', 'r1 c0');           // Mouseover for Row1 Col0
+            ConvertButtons2VT('r2 c0', sActivation = 'mouseover', 'r2 c0');           // Mouseover for Row2 Col0
+            ConvertButtons2VT('r0 c1', sActivation = 'mouseover', 'r0 c1');           // Mouseover for Row0 Col1
+            ConvertButtons2VT('r1 c1', sActivation = 'mouseover', 'r1 c1');           // Mouseover for Row1 Col1
+            ConvertButtons2VT('r2 c1', sActivation = 'mouseover', 'r2 c1');           // Mouseover for Row2 Col1
             resizeButtons();                                                    // Resize the text of all overflown buttons
         });
 
@@ -69,6 +66,8 @@
 
 {% block content %}
     <div id="game-container">
+        <!-- <div>Time left to choose your basket: <span id="time">15</span> seconds!</div> -->
+        <div class="break"> </div>
         <!-- Colnames -->
         <div  class="game-btn empty"> </div> 
         <button type="button" class="game-btn c0 btn-attr" id="C0"> Basket 1 </button> 
@@ -76,14 +75,14 @@
         <div class="break"> </div>
         <!-- Row 0 -->
         <!-- <img class="img-info" src="{% static sColour1 %}" /> -->
-        <button type="button" class="game-btn r0 btn-attr"  id="R0"> <img class="img-info" style="display:block;" width="100%" src="{% static vColours.sColour1 %}" /> </button> 
+        <button type="button" class="game-btn r0 btn-attr"  id="R0"> <img class="img-info" style="display:block;" width="100%" src="{% static sColour1 %}" /> </button> 
         <!-- <button type="button" class="game-btn btn-attr r0" id="R0"> {{ Attr0 }} </button>  -->
         <button type="button" class="game-btn btn-outcome r0 c0" id="R0C0"> 
-            <div class="btn-content"> {{ Mid0 }} </div>
+            <div class="btn-content"> {{ A00 }} </div>
             <div class="btn-hidden">  </div>
         </button> 
         <button type="button" class="game-btn btn-outcome r0 c1" id="R0C1">
-            <div class="btn-content"> {{ Mid1 }} </div>
+            <div class="btn-content"> {{ A01 }} </div>
             <div class="btn-hidden">  </div>
         </button> 
         <div class="break"> </div>
@@ -107,7 +106,7 @@
         <button type="button" class="game-btn btn-outcome r2 c0" id="R2C0"> 
             <div class="btn-content"> {{ A20 }}  </div>
             <div class="btn-hidden">  </div>
-        </button> 
+        </button>
         <button type="button" class="game-btn btn-outcome r2 c1" id="R2C1">
             <div class="btn-content"> {{ A21 }} </div>
             <div class="btn-hidden">  </div>

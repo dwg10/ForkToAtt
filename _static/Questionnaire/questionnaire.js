@@ -81,12 +81,22 @@ const firstQuestions = [
             "Prefer not to say"
         ]    
     },    
-    // {
-    //     question: "What country do you live in?",
-    //     name: "D3",
-    //     type: "autocomplete",
-    //     list: countries,
-    // },    
+    {
+        question: "What is the highest level of education that you have completed?",
+        name: "D3",
+        type: "radio",
+        values: [1,2,3,4,5,6,7,8],
+        labels: [
+            "Primary School",
+            "Secondary School (VMBO)",
+            "Secondary School (HAVO)",
+            "Secondary School (VWO)",
+            "Bachelor Degree (University/HBO)",
+            "Master Degree (University/HBO)",
+            "Other",
+            "Prefer not to say"
+        ]    
+    },    
     {
         question: "What is your nationality?",
         name: "D4",
@@ -106,7 +116,7 @@ const firstQuestions = [
         type: "longOpen",
     },
     {
-        question: "During the experiment, did you use any specific strategy or rule of thumb when deciding which of the two products to purchase? If so, describe it shortly.",
+        question: "During the experiment, did you use any specific strategy or rule of thumb when deciding which of the two baskets was the most valuable? If so, describe it shortly.",
         name: "D7",
         type: "longOpen",
     },
@@ -194,7 +204,7 @@ const shuffleQuestions = [
         type: "scale",
     },
     {
-        question: "I schange jobs.",
+        question: "I change jobs.",
         name: "QT16",
         type: "scale",
     },

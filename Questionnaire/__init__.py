@@ -24,7 +24,7 @@ class Player(BasePlayer):
     # Variables for Demographics
     D1 = models.StringField()
     D2 = models.StringField()
-    # D3 = models.StringField()
+    D3 = models.StringField()
     D4 = models.StringField()
     D5 = models.StringField()
     D6 = models.StringField(blank=True)
@@ -75,12 +75,15 @@ class Player(BasePlayer):
 
 
 # PAGES
+class First(Page):
+    pass
+
 class Questionnaire(Page):
     form_model = 'player'
     # form_fields = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 
     # 'QT1', 'QT2', 'QT3', 'QT4', 'QT5', 'QT6', 'QT7', 'QT8', 'QT9', 'QT10', 'QT11', 'QT12', 'QT13', 'QT14', 
     # 'V1','V2','V3','AF1']
-    form_fields = ['D1', 'D2', 'D4', 'D5', 'D6', 'D7', 
+    form_fields = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 
     'QT1', 'QT2', 'QT3', 'QT4', 'QT5', 'QT6', 'QT7', 'QT8', 'QT9', 'QT10', 'QT11', 'QT12', 'QT13', 'QT14', 'QT15',
     'QT16', 'QT17', 'QT18', 'QT19', 'QT20', 'QT21', 'QT22', 'QT23', 'QT24', 'QT25', 'QT26', 'QT27', 'QT28', 'QT29', 'QT30',
     'V1','V2','V3']
@@ -103,4 +106,4 @@ class Questionnaire(Page):
         valid3 = int(int(player.V3)==1)
         player.participant.validQuestionnaire = valid1 + valid2 + valid3
 
-page_sequence = [Questionnaire]
+page_sequence = [First, Questionnaire]
