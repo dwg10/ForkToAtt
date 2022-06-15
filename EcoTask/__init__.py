@@ -58,7 +58,7 @@ class Player(BasePlayer):
     ## Decision Variables
     iDec                = models.IntegerField(blank=True)
     dRT                 = models.FloatField(blank=True)
-    iTest               = models.IntegerField(blank=True)
+    # iTest               = models.IntegerField(initial=0)
     ## Attention Variables
     sButtonClick        = models.LongStringField(blank=True)
     sTimeClick          = models.LongStringField(blank=True)
@@ -270,16 +270,16 @@ class Task(Page):
         participant = player.participant
         Corr0B1 = player.Corr0B1
         Corr1B1 = player.Corr1B1
-        iTestUTN = player.iTest
+        # iTestUTN = player.iTest
         # Add Focus variables to total if it's not practice trial
         if (player.round_number > Constants.num_prounds):
             participant.iOutFocus = int(participant.iOutFocus) + player.iFocusLost
             participant.iFullscreenChanges = int(participant.iFullscreenChanges) + player.iFullscreenChange
             participant.dTimeOutFocus = float(participant.dTimeOutFocus) + player.dFocusLostT
-            if (player.iDec == 0):
-                player.iTest = int(iTestUTN) + int(Corr0B1)
-            else:
-                player.iTest = int(iTestUTN) + int(Corr1B1)  
+            # if (player.iDec == 0):
+            #     player.iTest = int(iTestUTN) + int(Corr0B1)
+            # else:
+            #     player.iTest = int(iTestUTN) + int(Corr1B1)  
         # If this is selected trial, save relevant variables
         if (participant.iSelectedTrialB1==player.round_number):
             if (player.iDec==0):
