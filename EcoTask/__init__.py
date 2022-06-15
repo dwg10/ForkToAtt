@@ -270,34 +270,27 @@ class Task(Page):
         participant = player.participant
         Corr0B1 = player.Corr0B1
         Corr1B1 = player.Corr1B1
-        participant.iTest = 0
+        iTestUTN = player.iTest
         # Add Focus variables to total if it's not practice trial
         if (player.round_number > Constants.num_prounds):
             participant.iOutFocus = int(participant.iOutFocus) + player.iFocusLost
             participant.iFullscreenChanges = int(participant.iFullscreenChanges) + player.iFullscreenChange
             participant.dTimeOutFocus = float(participant.dTimeOutFocus) + player.dFocusLostT
             if (player.iDec == 0):
-                participant.iTest = int(participant.iTest) + int(Corr0B1)
+                player.iTest = int(iTestUTN) + int(Corr0B1)
             else:
-                participant.iTest = int(participant.iTest) + int(Corr1B1)  
+                player.iTest = int(iTestUTN) + int(Corr1B1)  
         # If this is selected trial, save relevant variables
         if (participant.iSelectedTrialB1==player.round_number):
             if (player.iDec==0):
-                # participant.MidB1 = player.Mid0B1
-                # participant.HighB1 = player.High0B1
-                # participant.LowB1 = player.Low0B1
                 if (int(player.Corr1B1) + int(player.iDec) == 1):
                     participant.sCorrB1 = "did"
-                else:
+                elif (int(player.Corr1B1) + int(player.iDec) == 0):
                     participant.sCorrB1 = "did not"
             else:
-                # participant.MidB1 = player.Mid1B1
-                # participant.HighB1 = player.High1B1
-                # participant.LowB1 = player.Low1B1
-                # participant.CorrSelB1 = player.Corr1B1 * player.iDec
                 if (int(player.Corr1B1) * int(player.iDec) == 1):
                     participant.sCorrB1 = "did"
-                else:
+                elif (int(player.Corr1B1) + int(player.iDec) == 1):
                     participant.sCorrB1 = "did not"
        
 

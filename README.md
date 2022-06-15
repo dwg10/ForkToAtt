@@ -1,18 +1,18 @@
-# ECO-LABELS EXPERIMENT 
+# Attention-Baskets EXPERIMENT 
 
 
 ***********************************
-### EcoLabels Apps (and Pages) Sequence ### 
+### Attention-Baskets Apps (and Pages) Sequence ### 
 
     1. Instructions
-        - Introduction
-        - ConsentForm
+        - Introduction and ConsentForm
         - Instructions
 
-    2. EcoTask
-        - Decision (several rounds)
-        - Infographics
-        - Decision (several rounds)
+    2. Attention Experiment
+        - Infographics (Initial Value/Colour Distribution)
+        - Decision Trials (21 rounds)
+        - Infographics (Change of one Value-Colour Pair)
+        - Decision Trials (21 rounds)
 
     3. Questionnaire
         - Questionnaire
@@ -21,10 +21,7 @@
 ********************************
 ### Other Files
 
-    4. Bugs and Improvements
-        - record of current bugs and suggested improvements
-
-    5. settings.py
+    4. settings.py
         - determines treatment + app sequence
 
 

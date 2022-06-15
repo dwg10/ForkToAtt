@@ -45,6 +45,9 @@ class Player(BasePlayer):
 
     # Selected Trial
     partID              = models.StringField()
+    iCorrectB1          = models.IntegerField()
+    iCorrectB2          = models.IntegerField()
+    iCorrectTotal          = models.IntegerField()
     iSelectedTrial       = models.IntegerField()
     sSelectedTrialBlock = models.StringField()
     bCorrectBonus        = models.StringField()
@@ -70,6 +73,9 @@ class EndPage(Page):
     @staticmethod
     def vars_for_template(player):
         p = player.participant
+        p.iCorrectB1 = p.iTest1
+        p.iCorrectB2 = p.iTest2
+        p.iCorrectTotal = int(p.iCorrectB1) + int(p.iCorrectB2)
         iSelectedTrialB1 = p.iSelectedTrialB1
         iSelectedTrialB2 = p.iSelectedTrialB2
         randomTrial = random.choice([True,False])
@@ -109,10 +115,14 @@ class EndPage(Page):
         # S_rounded  = int(np.ceil(Svalue))
         
         return {
+            'iCorrectB1' : p.iCorrectB1,
+            'iCorrectB2' : p.iCorrectB2,
+            'iCorrectTotal' : p.iCorrectTotal,
             'iSelectedTrial' : p.iSelectedTrial,
             'sSelectedTrialBlock' : p.sSelectedTrialBlock,
             'bCorrectBonus' : p.sCorr,
             'iBonusPayment' : int(10),
+            'iBlockTrials' : int(21),
             'iTotalTrials' : int(42),
         }
 
@@ -128,6 +138,9 @@ class EndPage(Page):
         player.partID           = part.code
         player.ProlificID       = part.label
         player.TotalTime        = end - start
+        player.iCorrectB1    = int(part.iCorrectB1)
+        player.iCorrectB2    = int(part.iCorrectB2)
+        player.iCorrectTotal    = int(part.iCorrectTotal)
         player.iSelectedTrial    = int(part.iSelectedTrial)
         player.sSelectedTrialBlock    = part.sSelectedTrialBlock
         player.bCorrectBonus    = part.bCorrectBonus

@@ -3,12 +3,10 @@ from os import environ
 SESSION_CONFIGS = [
     dict(
     name='session_config',
-    display_name='Ecolabels Config',
-    num_demo_participants=6,
-    # app_sequence=['Instructions', 'EcoTask', 'Infographics2','EcoTask2','EndBelief','Questionnaire' ,'EndPage'],
+    display_name='Basket Config',
+    num_demo_participants = 6,
     app_sequence=['Instructions', 'Infographics1', 'EcoTask', 'Infographics3', 'EcoTask2', 'Questionnaire', 'EndPage'],
     # app_sequence=['Infographics1', 'EcoTask', 'Infographics3', 'EcoTask2', 'EndPage'],
-    # app_sequence=['Instructions', 'Infographics1', 'Infographics3', 'EcoTask2'], #, 'EndBelief','Questionnaire','EndPage'],
     iTreatment = 5, # 1 meer dan het aantal treatments
     iColour = 5, # 1 meer dan het aantal treatments
     iTimeOut=0,
@@ -99,11 +97,11 @@ PARTICIPANT_FIELDS = [
     'iOutFocus',
     'sAttrOrder',
     'iFullscreenChanges',
-    'iCorrectBeliefs',
+    # 'iCorrectBeliefs',
     'iTreatment',
     'iColour',
     'startTime',
-    'sTreesLocation',
+    # 'sTreesLocation',
     'dPixelRatio',
     'lAttr',
     'vColours',
@@ -116,7 +114,6 @@ SESSION_CONFIG_DEFAULTS = dict(
 )
 
 #OTREE_PRODUCTION = 1
-
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
@@ -134,7 +131,6 @@ ROOMS = [
     ),
     dict(name='prolific', display_name='Prolific Room (no participant labels)'),
 ]
-
 
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable

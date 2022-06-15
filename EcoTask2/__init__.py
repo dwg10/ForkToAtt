@@ -60,7 +60,7 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     ## Decision Variables
     iDec                = models.IntegerField(blank=True)
-    iTest                = models.IntegerField(blank=True)
+    iTest2              = models.IntegerField(blank=True)
     dRT                 = models.FloatField(blank=True)
     ## Attention Variables
     sButtonClick        = models.LongStringField(blank=True)
@@ -307,35 +307,27 @@ class Task(Page):
         participant = player.participant
         Corr0B2 = player.Corr0B2
         Corr1B2 = player.Corr1B2
-        # participant.iTest = 0
+        iTestUTN2 = player.iTest2
         # Add Focus variables to total if it's not practice trial
         if (player.round_number > Constants.num_prounds):
             participant.iOutFocus = int(participant.iOutFocus) + player.iFocusLost
             participant.iFullscreenChanges = int(participant.iFullscreenChanges) + player.iFullscreenChange
             participant.dTimeOutFocus = float(participant.dTimeOutFocus) + player.dFocusLostT
             if (player.iDec == 0):
-                participant.iTest = int(participant.iTest) + int(Corr0B2)
+                player.iTest2 = int(iTestUTN2) + int(Corr0B2)
             else:
-                participant.iTest = int(participant.iTest) + int(Corr1B2)                
-            # participant.iNrCorrTrialsB2 = 
+                player.iTest2 = int(iTestUTN2) + int(Corr1B2)                 
         # If this is selected trial, save relevant variables
         if (participant.iSelectedTrialB2==player.round_number):
             if (player.iDec==0):
-                # participant.MidB1 = player.Mid0B1
-                # participant.HighB1 = player.High0B1
-                # participant.LowB1 = player.Low0B1
                 if (int(player.Corr1B2) + int(player.iDec) == 1):
                     participant.sCorrB2 = "did"
-                else:
+                elif (int(player.Corr1B2) + int(player.iDec) == 0):
                     participant.sCorrB2 = "did not"
             else:
-                # participant.MidB1 = player.Mid1B1
-                # participant.HighB1 = player.High1B1
-                # participant.LowB1 = player.Low1B1
-                # participant.CorrSelB1 = player.Corr1B1 * player.iDec
                 if (int(player.Corr1B2) * int(player.iDec) == 1):
                     participant.sCorrB2 = "did"
-                else:
+                elif (int(player.Corr1B2) + int(player.iDec) == 1):
                     participant.sCorrB2 = "did not"
             
             randomTrial = random.choice([True,False])

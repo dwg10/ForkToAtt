@@ -78,8 +78,8 @@ const firstQuestions = [
             "Female",
             "Male",
             "Other",
-            "Prefer not to say"
-        ]    
+            "Prefer not to say",
+        ],    
     },    
     {
         question: "What is the highest level of education that you have completed?",
@@ -94,7 +94,7 @@ const firstQuestions = [
             "Bachelor Degree (University/HBO)",
             "Master Degree (University/HBO)",
             "Other",
-            "Prefer not to say"
+            "Prefer not to say",
         ]    
     },    
     {
@@ -108,15 +108,15 @@ const firstQuestions = [
         name: "D5",
         type: "radio",
         values: [1,2,3],
-        labels: ['Yes','No',"Not sure / don't remember"]
+        labels: ['Yes','No',"Not sure / don't remember"],
     },
     {
-        question: "What do you think is the purpose of this study? Describe shortly in your own words.",
+        question: "During the experiment, did you use any specific strategy or rule of thumb when deciding which of the two baskets was the most valuable? If so, describe it shortly.",
         name: "D6",
         type: "longOpen",
     },
     {
-        question: "During the experiment, did you use any specific strategy or rule of thumb when deciding which of the two baskets was the most valuable? If so, describe it shortly.",
+        question: "Please enter your email address if you would like to be considered for the payment (bol.com giftcards).",
         name: "D7",
         type: "longOpen",
     },
