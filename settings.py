@@ -129,7 +129,7 @@ ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
-# OTREE_AUTH_LEVEL = 'DEMO'
+OTREE_AUTH_LEVEL = 'STUDY'
 
 DEMO_PAGE_INTRO_HTML = """
 Here are some oTree games.
