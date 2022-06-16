@@ -13,10 +13,9 @@ class Constants(BaseConstants):
     num_rounds = 1
     ## Symbols directory
     UvA_logo = 'global/figures/UvA_logo.png'
-    revealed_task = 'global/figures/revealed_task_balls_img.png'
-    revealed_task_question = 'global/figures/revealed_task_balls_question_img.png'
-    circled_task = 'global/figures/circled_task_balls_img.png'
-    star_symbol = 'global/figures/one_star.png'
+    revealed_task = 'global/figures/revealed_task_balls_img.PNG'
+    revealed_task_question = 'global/figures/revealed_task_balls_question_img.PNG'
+    circled_task = 'global/figures/circled_task_balls_img.PNG'
     ## Variables that are not fully defined yet
     BonusPayment = int(10)
     FixedPayment = int(20)
