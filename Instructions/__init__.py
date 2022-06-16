@@ -21,7 +21,7 @@ class Constants(BaseConstants):
     FixedPayment = int(20)
     MaxPayment = int(30)
     NumTrials = int(42)
-    AvgDuration = "10-12"
+    AvgDuration = "12-15"
 
     ## Slides for introduction
     SlidePath = 'Instructions/slide'

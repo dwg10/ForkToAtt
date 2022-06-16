@@ -60,7 +60,6 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     ## Decision Variables
     iDec                = models.IntegerField(blank=True)
-    # iTest2              = models.IntegerField(blank=True)
     dRT                 = models.FloatField(blank=True)
     ## Attention Variables
     sButtonClick        = models.LongStringField(blank=True)

@@ -74,8 +74,6 @@ SESSION_CONFIGS = [
 PARTICIPANT_FIELDS = [
     'treatment',
     'colour',
-    'iTest',
-    'iCounterCorrect',
     'PresOrder',
     'mTreat',
     'vRownames',
@@ -87,21 +85,16 @@ PARTICIPANT_FIELDS = [
     'sCorr',
     'sCorrB1',
     'sCorrB2',
-    'CorrSelB1',
-    'CorrSelB2',
-    'ProlificID',
-    'Bonus',
-    'TreeAmount',
+    # 'CorrSelB1',
+    # 'CorrSelB2',
     'validQuestionnaire',
     'dTimeOutFocus',
     'iOutFocus',
     'sAttrOrder',
     'iFullscreenChanges',
-    # 'iCorrectBeliefs',
     'iTreatment',
     'iColour',
     'startTime',
-    # 'sTreesLocation',
     'dPixelRatio',
     'lAttr',
     'vColours',
@@ -136,7 +129,7 @@ ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
-OTREE_AUTH_LEVEL = 'DEMO'
+# OTREE_AUTH_LEVEL = 'DEMO'
 
 DEMO_PAGE_INTRO_HTML = """
 Here are some oTree games.
