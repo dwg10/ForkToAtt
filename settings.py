@@ -125,9 +125,9 @@ ROOMS = [
     dict(name='prolific', display_name='Prolific Room (no participant labels)'),
 ]
 
-ADMIN_USERNAME = 'admin'
+# ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
-ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
+# ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
 OTREE_AUTH_LEVEL = 'STUDY'
 
