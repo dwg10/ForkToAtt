@@ -66,7 +66,7 @@ class Player(BasePlayer):
     sTimeClick          = models.LongStringField(blank=True)
     ## Trial Variables
     iPracticeRound      = models.BooleanField(initial=0)
-    iBlock              = models.IntegerField(initial=1)
+    iBlock              = models.IntegerField(initial=2)
     iBlockTrial         = models.IntegerField(blank=True)
     sAttrOrder          = models.StringField(blank=True)
     bStartLeft          = models.BooleanField(blank=True)
