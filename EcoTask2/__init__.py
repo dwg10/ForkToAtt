@@ -329,6 +329,7 @@ class Task(Page):
                 elif (int(player.Corr1B2) + int(player.iDec) == 1):
                     participant.sCorrB2 = "did not"
             
+            # Onderstaande eigenlijk overbodig
             randomTrial = random.choice([True,False])
             if (randomTrial == True):
                 player.participant.iSelectedTrial = player.participant.iSelectedTrialB1

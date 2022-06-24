@@ -62,7 +62,7 @@ class EndPage(Page):
         return {
             'iSelectedTrial' : p.iSelectedTrial,
             'sSelectedTrialBlock' : p.sSelectedTrialBlock,
-            'bCorrectBonus' : p.sCorr,
+            'bCorrectBonus' : p.bCorrectBonus,
             'iBonusPayment' : int(10),
             'iBlockTrials' : int(21),
             'iTotalTrials' : int(42),
