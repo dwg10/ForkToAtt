@@ -319,9 +319,9 @@ class Task(Page):
         # If this is selected trial, save relevant variables
         if (participant.iSelectedTrialB2==player.round_number):
             if (player.iDec==0):
-                if (int(player.Corr1B2) + int(player.iDec) == 1):
+                if (int(player.Corr0B2) + int(player.iDec) == 1):
                     participant.sCorrB2 = "did"
-                elif (int(player.Corr1B2) + int(player.iDec) == 0):
+                elif (int(player.Corr0B2) + int(player.iDec) == 0):
                     participant.sCorrB2 = "did not"
             else:
                 if (int(player.Corr1B2) * int(player.iDec) == 1):

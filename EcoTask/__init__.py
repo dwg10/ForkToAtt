@@ -126,14 +126,14 @@ def creating_session(subsession):
         player.Corr1B1 = str(lCorr[1])
         if p.vRownames[0]=='Low':
             player.High0B1 = str(lAttr[2][0])
-            player.High1B1 = str(lAttr[2][1]) #3
-            player.Low0B1 = str(lAttr[0][0]) #4
-            player.Low1B1 = str(lAttr[0][1]) #5
+            player.High1B1 = str(lAttr[2][1])
+            player.Low0B1 = str(lAttr[0][0])
+            player.Low1B1 = str(lAttr[0][1])
         else:
-            player.High0B1 = str(lAttr[0][0]) #4
-            player.High1B1 = str(lAttr[0][1]) #5
+            player.High0B1 = str(lAttr[0][0])
+            player.High1B1 = str(lAttr[0][1])
             player.Low0B1 = str(lAttr[2][0])
-            player.Low1B1 = str(lAttr[2][1]) #3
+            player.Low1B1 = str(lAttr[2][1])
 
 # # Functions
 # def join2String(list, delimiter= ','):
@@ -273,9 +273,9 @@ class Task(Page):
         # If this is selected trial, save relevant variables
         if (participant.iSelectedTrialB1==player.round_number):
             if (player.iDec==0):
-                if (int(player.Corr1B1) + int(player.iDec) == 1):
+                if (int(player.Corr0B1) + int(player.iDec) == 1):
                     participant.sCorrB1 = "did"
-                elif (int(player.Corr1B1) + int(player.iDec) == 0):
+                elif (int(player.Corr0B1) + int(player.iDec) == 0):
                     participant.sCorrB1 = "did not"
             else:
                 if (int(player.Corr1B1) * int(player.iDec) == 1):
